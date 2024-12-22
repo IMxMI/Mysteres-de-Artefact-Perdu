@@ -71,44 +71,56 @@ L'objectif principal est de réunir les fragments de L’Oculus du Jugement tout
 
 ### Carte et Zones
 
-Le jeu comporte six zones connectées par des sorties directionnelles. Chaque zone est unique, avec des énigmes, des objets à récupérer, et des obstacles à surmonter.
+Le jeu comporte six zones connectées par des sorties directionnelles (visibles ou invisibles et fermées ), certaines avec retour possible et d’autres sans retour.
 
 #### 1. Nouvelle-Dauréa
-- Une cité lumineuse marquée par des ruines anciennes et des habitants amicaux. Cette zone offre des indices sur l'artefact.
+- Le jeu commence dans la ville Nouvelle-Dauréa. Pour progresser, Soren doit résoudre une énigme afin d’obtenir un indice qui l'oriente vers la prochaine zone. Plusieurs objets sont disponibles dans cette zone : une carte, essentielle pour naviguer, ainsi qu'une clé végétale et de l'eau bénite, des objets mystiques ayant des pouvoirs spécifiques qui pourraient être utiles plus tard. Un point de commerce permet également au joueur d'acheter un fragment précieux, mais ce dernier est momentanément inaccessible, car gardé par le gardien Kosaraju. Un message s'affiche à l'écran pour rappeler au joueur que son sac ne peut contenir que cinq objets à la fois. Il lui est donc conseillé de faire le bon choix, sachant qu'il peut déposer des objets pour en prendre d'autres si la limite est atteinte. Enfin, deux sorties fermées sont présentes dans cette zone (N) et (E), permettant au joueur de choisir sa direction, mais il doit d'abord résoudre l'énigme et sélectionner les objets nécessaires pour la suite de son aventure.
 
-#### 2. La Clairière des Souvenirs
-- Une forêt mystérieuse peuplée de créatures magiques et protégée par Tarjan, un gardien ancestral.
+#### 2. La Clairière des Souvenirs (Forêt mystique)
+- Dans cette zone, certains chemins sont bloqués par des ronces, nécessitant un objet pour les franchir. Tarjan, le gardien de la forêt, présente une énigme à résoudre pour découvrir l’emplacement des objets suivants : le deuxième fragment, une corde, et un premier indice pour l'énigme finale. Deux sorties visibles sont présentes, marquées (S) et (O), et il est également possible de revenir dans cette zone.
+
 
 #### 3. La Zone Désertique
-- Un désert aride où chaque pas peut être mortel. Les tempêtes de sable cachent un fragment de l'artefact.
+- La zone désertique présente des énigmes basées sur les chiffres et des indices visuels pour récupérer un éclat de cristal. Cet éclat peut être vendu au point de commerce en échange du premier fragment et du deuxième indice pour l’énigme finale. Deux sorties visibles sont présentes, marquées (B) et (S), et un retour est possible vers les zones précédentes.
 
 #### 4. Camp Tarsis
-- Un campement fortifié contrôlé par des marchands étranges. Cette zone propose des échanges d'objets contre des indices.
+- Dans cette zone, Soren doit voler un troisième fragment caché dans un coffre sécurisé par une énigme. Le coffre contient aussi des objets utiles, comme une torche (indispensable pour la prochaine zone), une potion de temps, et un troisième indice. Le joueur doit bien choisir les objets à prendre, car le coffre est surveillé par Ravok le Dévastateur, membre de la faction Hostile. Un timer est en place : lorsque le soldat tourne le dos, le joueur peut ouvrir le coffre. Si le temps expire sans ouvrir le coffre, le soldat se retourne et tue l’aventurier. La sortie de la zone est une fosse invisible, accessible une fois l'énigme résolue. Le joueur y tombe et se retrouve dans une grotte, une pièce totalement noire. Il n'est plus possible de revenir dans cette zone ni dans les zones précédentes.
 
 #### 5. La Grotte
-- Une caverne obscure pleine de dangers, abritant un fragment essentiel.
+- Dans cette zone, le joueur se retrouve dans un labyrinthe obscur avec un temps limité. Il doit impérativement utiliser la torche (récupérée au préalable) pour explorer dans le noir. L’objectif est de trouver le quatrième et dernier fragment, ainsi que la sortie de la pièce invisible, avant que le temps ne s’écoule. Cette zone est sans retour : une seule sortie existe, et si le joueur échoue, il doit recommencer l’aventure depuis le début, perdant tous les objets, indices et fragments déjà collectés.
 
 #### 6. Laboratoire Abandonné
-- Le lieu d'origine du chaos mondial, rempli de mystères scientifiques et de traces du passé.
+- Il s'agit de la zone finale, où se trouve une machine conçue pour assembler les quatre fragments. Pour débloquer cette machine, le joueur doit résoudre une énigme finale en utilisant les trois indices récoltés précédemment. S'il oublie un fragment ou s'il échoue à résoudre l'énigme, le joueur perd et doit recommencer l'aventure depuis le début, en perdant tous les objets et fragments collectés.
+
+
+Chaque zone inclut des éléments interactifs, des énigmes, des obstacles, des objets et des indices. Les sorties peuvent être classiques (N, S, E, O, B, H), visibles ou invisibles ou fermées, certaines sans retour.
 
 ---
 
 ### Objets, Indices et Fragments
 
-- **Carte** : Permet au joueur de visualiser l'agencement des zones.
-- **Eau Bénite** : Utilisée pour détruire les ronces magiques.
-- **Corde** : Indispensable pour franchir des gouffres ou obstacles physiques.
-- **Potion de Temps** : Accorde un temps supplémentaire pour terminer le jeu.
+- **Carte** : Permet au joueur de visualiser l’agencement des zones de manière globale. Elle indique également les connexions entre les zones (retours possibles ou non). et le nombre de fragments. N’affiche pas les détails des énigmes ou des emplacements exacts des objets.
+- **Eau Bénite** : Détruit les ronces dans La Clairière des Souvenirs, ouvrant des chemins bloqués.
+- **Corde** : Utilisée pour traverser des obstacles physiques.
+- **Potion de Temps** : accorde un délai supplémentaire lors d’énigmes chronométrées.
 - **Fragments d'Artefact** : Dissimulés dans chaque zone, ils sont indispensables pour réussir la quête.
+- **Eclat de cristal** : Un objet précieux pouvant être vendu au point de commerce pour récupérer le premier fragment dans Nouvelle-Dauréa.
+- **Trois indice** : Pour aider à trouver l'énigme finale.
+- **Indice initial** : en rapport avec la position de la deuxième zone.
+- **Torche** : Essentielle pour explorer La Grotte . Elle permet d’illuminer les chemins et de découvrir des mécanismes invisibles dans l’obscurité.
+- **Clé végétale** : Ouvre une porte bloquée dans la forêt.
+- **Fragment d'artefact** : Collecté dans chaque zone.Requis pour assembler **L'Oculus du Jugement**.dans Le Laboratoire Abandonné.
+
+Le joueur peut transporter ces objets dans un sac à dos limité à cinq objets, obligeant à des choix stratégiques. La commande I pour Inventaire permet de savoir combien d’objets il a dans son sac.
 
 ---
 
 ### Les Personnages
 
-- **Kael Soren** : Héros principal, un aventurier charismatique.
-- **Tarjan** : Gardien de la forêt, protecteur des secrets anciens.
-- **Kosaraju** : Un marchand énigmatique au Camp Tarsis.
-- **Ravok le Dévastateur** : Un ennemi redoutable cherchant à s'emparer de l'artefact.
+- **Kael Soren** : Jeune aventurier.
+- **Tarjan** : Le gardien de la forêt.
+- **Kosaraju** : Le gardien du point de commerce.
+- **Ravok le Dévastateur** : Membre de la faction Hostile.
 
 ---
 
@@ -116,11 +128,18 @@ Le jeu comporte six zones connectées par des sorties directionnelles. Chaque zo
 
 - **Q** : Quitter le jeu.
 - **N, S, E, O** : Se déplacer dans les directions cardinales.
+- **H, B** : Se déplacer en hauteur (Haut, Bas).
+- **R** : Revenir à la zone précédente (Retour).
 - **P** : Prendre un objet.
 - **D** : Déposer un objet.
 - **I** : Ouvrir l'inventaire actuel.
 - **A** : Accéder à l'aide.
-- **R** : Récupérer un fragment spécifique.
+- **T** : Test.
+- **P** : Parler.
+- **V** : Vendre.
+- **F** : Fragments.
+- **V** : Voir les indices.
+
 
 ---
 
@@ -130,27 +149,30 @@ Le jeu comporte six zones connectées par des sorties directionnelles. Chaque zo
 - Assemblage complet de l'artefact dans le laboratoire.
 
 #### Situations Perdantes
-- Dépassement du temps limite.
-- Mort par un ennemi ou un piège.
-- Oubli d'un fragment essentiel.
+- Dépasser le temps maximum dans le labyrinthe.
+- Oublier de collecter un fragment essentiel.
+- Se faire tuer par Ravok le Dévastateur, membre de la faction hostile, dans le Camp Tarsis.
+
 
 ---
 
 ### Déroulement d'une Partie Gagnante
 
-1. Explorer Nouvelle-Dauréa pour obtenir des indices clés.
-2. Passer par la Clairière des Souvenirs et convaincre Tarjan d'aider.
-3. Traverser la Zone Désertique pour récupérer le fragment caché.
-4. Faire des échanges avec Kosaraju au Camp Tarsis.
-5. Survivre à la Grotte et récupérer un autre fragment.
-6. Assembler l'artefact dans le Laboratoire Abandonné.
+Kael Soren commence son aventure dans la ville antique de Nouvelle-Dauréa, où il résout une énigme ("J'ai un corps sans vie, une voix sans âme. Qui suis-je ?") en répondant un écho, ce qui débloque la sortie vers la Clairière des Souvenirs. Il collecte des objets essentiels comme une carte, une clé végétale, et de l’eau bénite tout en respectant la limite de cinq objets dans son sac. Arrivé dans la Clairière des Souvenirs, il rencontre Tarjan, le gardien, qui lui pose une énigme basée sur ses observations précédentes ("Combien d'arbres avez-vous vus avant d’arriver ici ?", réponse : "7"). En résolvant l’énigme, Soren obtient un fragment d’artefact, une corde, et un premier indice pour l’énigme finale. Grâce à l’eau bénite, il élimine les ronces bloquant son chemin et progresse vers la Zone Désertique.
+
+Dans cette zone, Kael résout une énigme numérique ("La somme des deux premiers chiffres est égale à 9, mais le troisième chiffre est leur différence", réponse : "63") pour obtenir un éclat de cristal. Il échange cet objet précieux au point de commerce contre un autre fragment d’artefact et un deuxième indice. Après avoir traversé un obstacle à l’aide de la corde, il atteint le Camp Tarsis, où il récupère un troisième fragment d’artefact en ouvrant un coffre sécurisé tout en évitant Ravok le Dévastateur grâce à des mouvements stratégiques et rapides. Dans le coffre, il trouve également une torche et une potion de temps, indispensables pour explorer la prochaine zone. Une fosse invisible l’amène ensuite à la Grotte, un labyrinthe obscur où il utilise la torche pour naviguer et trouver le dernier fragment d’artefact avant que le temps imparti ne s’écoule.
+
+Enfin, Soren arrive au Laboratoire Abandonné, où il assemble les quatre fragments à l’aide des indices collectés lors de son aventure. Après avoir résolu l’énigme finale, il active la machine et crée l’Oculus du Jugement, marquant ainsi la victoire et la fin de son périple.
 
 ---
 
 ## Enigmes
 
 ### Cadenas
-Indices :
+Dans une zone il y a un cadenas avec un code à 3 chiffres qu’il faut débloquer pour accéder à la prochaine zone/salle.
+A côté, on peut trouver une feuille avec les indications suivantes : 
+
+**Indices :**
 - `317 => 0 Correct | 1 Mal placé`
 - `240 => 1 Correct | 1 Mal placé`
 - `017 => 0 Correct | 0 Mal placé`
@@ -158,19 +180,83 @@ Indices :
 **Solution** : `234`
 
 ### Simon
-- Répéter une séquence de couleurs qui s'allonge à chaque tour.
+C’est un jeu de mémoire où le héros va faire face à une suite de symboles/couleurs qui défile dans le terminal. Il va devoir retenir la suite de symboles qui évolue au fur et à mesure.
+
+**Exemple :**
+`Au début le symbole @ apparaît, le joueur va devoir écrire @ à son tour,
+Puis les symboles @ # apparaissent, le joueur va devoir écrire @ # à son tour.
+Puis les symboles @ # $ apparaissent, le joueur va devoir écrire la même suite à son tour et ainsi de suite jusqu’à atteindre une suite de 6 symboles qui valide l’énigme et fait passer le joueur à la suite.
+`
 
 ### Juste Prix
-- Deviner un code à 4 chiffres en un nombre limité de tentatives.
+C’est un jeu où pour trouver un code à 4 chiffres, le joueur doit proposer à un PNJ des nombres et celui-ci lui répondra “Plus” ou “Moins” en fonction de la valeur qu’il cherche dans un temps imparti de 60 secondes, au bout duquel l’énigme sera échouée.
+
+**Exemple :**
+- `Le joueur propose (écrit dans le terminal) au PNJ 2000,`
+- `Le PNJ répond “Plus”,`
+- `5000,`
+- `"Plus",`
+- `.....`
+- `5693`
+
+**Solution** : `5693`
+
+Le joueur propose 5693. C’est la bonne réponse, il peut passer à la suite. S' il ne trouve pas la bonne réponse, le jeu est perdu.
+Ainsi, le joueur peut entrer le code qu’il a trouvé pour passer un obstacle.
+
+
+### L’énigme du choix
+
+Pour ce jeu, le joueur a le choix entre deux possibilités, soit prendre une question compliquée pour obtenir un indice très important et qui donne de très bonnes indications au joueur ou bien une énigme plus simple pour obtenir un indice moins utile mais tout de même important.
+
+**Exemple de la question difficile :**
+
+- `"Je suis petit mais précieux,
+ Dans l’ombre, je reste silencieux.
+ Trouve-moi pour ouvrir la voie,
+Car sans moi, tout s’arrête là."`
+
+**Exemple de la question simple :** 
+
+- `"Je suis petit et métallique,
+J’ouvre les serrures, je suis pratique.
+Sans moi, les portes sont fermées,
+Je suis donc utile pour les déverrouiller."`
+
+Qui suis-je ?
+
+**Solution** : `Une clé`.
+
+Si le joueur se trompe dans sa réponse à l’énigme, il n’obtient pas l’indice.
+
+### Enigme de mémoire
+
+Le joueur arrive devant un obstacle où une question lui est posée à propos de ce qu’il a vu auparavant.
+
+**Exemple** : `Quel est le nom de l’artéfact ?`
+
+**Solution** : `Oculus du Jugement`
+
+### Enigme finale
+
+Lorsque le joueur se trouve devant la machine de fin, lui permettant de rassembler les fragments de l’artefact, une énigme va lui être posée et le joueur aura accès à 3 indices.
+
+**Exemple :** 
+- `“Je suis un gardien sans yeux, sans bras ni voix,
+Pourtant, je protège tout ce que tu tiens de précieux.
+Je peux être caché dans un coin discret ou bien en évidence,
+Mais tout le monde sait qu'un jour ou l'autre, je serai ouvert.
+Ma clé est souvent d'or, mais parfois de fer,
+Et dans mon ventre, tu trouveras des secrets, des biens ou des pierres.”`
+
 
 ---
 
 ## Checkstyle
+Nous avons décidé d'adopter le checkstyle Java de Google. Cette décision repose sur le fait qu'il s'agit de l'un des checkstyles les plus connus et les plus utilisés. Par conséquent, nous considérons qu'il est plus pertinent d'apprendre à utiliser celui-ci.
 
-- Standards de codage respectés.
-- Vérification automatique des conventions pour garantir un code propre.
+- **Conventions** : [Google Java Style Guide](https://checkstyle.sourceforge.io/styleguides/google-java-style-20220203/javaguide.html#s1-introduction)
+- **Configuration** : [Google Checks XML](https://github.com/checkstyle/checkstyle/blob/master/src/main/resources/google_checks.xml)
 
 ---
-
-**Fin du document.**
 
