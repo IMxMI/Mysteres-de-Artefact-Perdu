@@ -1,4 +1,4 @@
-package org.example;
+package org.jeu;
 public class Jeu {
 	
     private GUI gui; 
@@ -12,18 +12,29 @@ public class Jeu {
     public void setGUI( GUI g) { gui = g; afficherMessageDeBienvenue(); }
     
     private void creerCarte() {
-        Zone [] zones = new Zone [4];
-        zones[0] = new Zone("le couloir", "Couloir.jpg" );
-        zones[1] = new Zone("l'escalier", "Escalier.jpg" );
-        zones[2] = new Zone("la grande salle", "GrandeSalle.jpg" );
-        zones[3] = new Zone("la salle à manger", "SalleAManger.jpg" );
-        zones[0].ajouteSortie(Sortie.EST, zones[1]);
-        zones[1].ajouteSortie(Sortie.OUEST, zones[0]);
+        Zone [] zones = new Zone [6];
+        zones[0] = new Zone("Nouvelle-Dauréa", "NouvelleDaurea.png" );
+        zones[1] = new Zone("La Clairière des Souvenirs", "ClairiereSouvenir.png" );
+        zones[2] = new Zone("La Zone Désertique", "ZoneDesertique.png" );
+        zones[3] = new Zone("Camp Tarsis", "CampTarsis.png" );
+        zones[4] = new Zone("La Grotte", "Grotte.png" );
+        zones[5] = new Zone("Laboratoire Abandonnée", "laboratoire.png" );
+
+        zones[0].ajouteSortie(Sortie.NORD, zones[1]);
+        zones[0].ajouteSortie(Sortie.EST, zones[2]);
+
+        zones[1].ajouteSortie(Sortie.SUD, zones[0]);
         zones[1].ajouteSortie(Sortie.EST, zones[2]);
+
         zones[2].ajouteSortie(Sortie.OUEST, zones[1]);
-        zones[3].ajouteSortie(Sortie.NORD, zones[1]);
-        zones[1].ajouteSortie(Sortie.SUD, zones[3]);
-        zoneCourante = zones[1]; 
+        zones[2].ajouteSortie(Sortie.SUD, zones[0]);
+        zones[2].ajouteSortie(Sortie.EST, zones[3]);
+
+        zones[3].ajouteSortie(Sortie.OUEST, zones[2]);
+        zones[3].ajouteSortie(Sortie.SUD, zones[4]);
+
+        zones[4].ajouteSortie(Sortie.EST, zones[5]);
+        zoneCourante = zones[0];
     }
 
     private void afficherLocalisation() {
