@@ -2,8 +2,9 @@ package org.jeu;
 public class Jeu {
 	
     private GUI gui; 
-	private Zone zoneCourante;
-    
+	  private Zone zoneCourante;
+    private Joueur joueur;
+  
     public Jeu() {
         creerCarte();
         gui = null;
@@ -54,27 +55,97 @@ public class Jeu {
     public void traiterCommande(String commandeLue) {
     	gui.afficher( "> "+ commandeLue + "\n");
         switch (commandeLue.toUpperCase()) {
-        case "?" : case "AIDE" : 
-            afficherAide(); 
-        	break;
-        case "N" : case "NORD" :
-        	allerEn( "NORD"); 
-        	break;
-       case "S" : case "SUD" :
-        	allerEn( "SUD"); 
-        	break;
-        case "E" : case "EST" :
-        	allerEn( "EST"); 
-        	break;
-        case "O" : case "OUEST" :
-        	allerEn( "OUEST"); 
-        	break;
-        case "Q" : case "QUITTER" :
-        	terminer();
-        	break;
-       	default : 
-            gui.afficher("Commande inconnue");
-            break;
+            // Déplacements
+            case "N":
+            case "NORD":
+                allerEn("NORD");
+                break;
+            case "S":
+            case "SUD":
+                allerEn("SUD");
+                break;
+            case "E":
+            case "EST":
+                allerEn("EST");
+                break;
+            case "O":
+            case "OUEST":
+                allerEn("OUEST");
+                break;
+            case "H":
+            case "HAUT":
+                allerEn("HAUT");
+                break;
+            case "B":
+            case "BAS":
+                allerEn("BAS");
+                break;
+
+            case "R":
+            case "REVENIR":
+                revenir();
+                break;
+
+            case "P":
+            case "PRENDRE":
+                // TODO : item à définir 
+                joueur.prendreItem(item);
+                break;
+
+            case "D":
+            case "DEPOSER":
+                // TODO : item à définir 
+                joueur.deposerObjet(item);
+                break;
+
+            case "A":
+            case "A(FFICHER L'INVENTAIRE ACTUEL)":
+                afficherInventaire();
+                break;
+
+            case "T":
+            case "TEST":
+                test();
+                break;
+
+            case "C":
+            case "COMMUNIQUER":
+                joueur.communiquerAvecPNJ();
+                break;
+
+            case "V":
+            case "VENDRE":
+                vendre();
+                break;
+
+            case "X":
+            case "VOIR_INDICE":
+                voirIndices();
+                break;
+
+            case "Z":
+            case "SAUVEGARDER":
+                sauvegarderJeu();
+                break;
+
+            case "M":
+            case "AFFICHER":
+                afficherCarte();
+                break;
+
+            case "?":
+            case "AIDE":
+                afficherAide();
+                break;
+
+            case "Q":
+            case "QUITTER":
+                terminer();
+                break;
+
+            default:
+                gui.afficher("Commande inconnue. Tapez \"?\" pour la liste des commandes.");
+                break;
         }
     }
 
@@ -105,4 +176,34 @@ public class Jeu {
     	gui.afficher( "Au revoir...");
     	gui.enable( false);
     }
+
+    private void revenir() {
+        // TODO: Gérer le retour à la zone précédente 
+    }
+
+    private void test() {
+        // TODO: Exécuter une action de test ou un débogage
+    }
+
+    private void vendre() {
+        // TODO: Vendre un objet à un PNJ ou à un marchand 
+    }
+
+    private void voirIndices() {
+        // TODO: Afficher les indices collectés par le joueur
+    }
+
+    private void afficherInventaire() {
+        // TODO: Lister les objets dans le sac du joueur
+    }
+
+    private void sauvegarderJeu() {
+        // TODO: Mettre en place la logique de sauvegarde
+    }
+
+    private void afficherCarte() {
+        // TODO: Afficher un plan du monde (texte ou image)
+    }
+
+
 }

@@ -28,6 +28,7 @@ public class GUI implements ActionListener
 
    public void afficheImage( String nomImage) {
 	   	URL imageURL = this.getClass().getClassLoader().getResource("images/" + nomImage);
+
 	   	if( imageURL != null ) {
         	image.setIcon( new ImageIcon( imageURL ));
             fenetre.pack();
@@ -35,6 +36,7 @@ public class GUI implements ActionListener
            else{
             System.err.println("Image non trouvée " + nomImage);
         }
+
    }
 
     public void enable(boolean ok) {

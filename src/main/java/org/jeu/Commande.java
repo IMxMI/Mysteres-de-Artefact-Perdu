@@ -3,10 +3,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 public enum Commande {
-	NORD("N", "N (aller à la sortie nord)"), 
-	SUD("S", "S (aller à la sortie sud)"), 
-	EST("E", "E (aller à la sortie est)"), 
-	OUEST("O", "O (aller à la sortie ouest)"), 
+	// Déplacements
+	HAUT("H", "H (aller en haut)"),
+	BAS("B", "B (aller en bas)"),
+	REVENIR("R", "R (revenir à la zone précédente)"),
+
+	// Divers
+	PRENDRE("P", "P (prendre un objet)"),
+	DEPOSER("D", "D (déposer un objet)"),
+	AFFICHER_INVENTAIRE("A", "A (afficher l'inventaire actuel)"),
+	TEST("T", "T (test)"),
+	COMMUNIQUER("C", "C (Communiquer avec un autre Personnage)"),
+	VENDRE("V", "V (Vendre)"),
+	VOIR_INDICE("X", "X (voir les indices)"),
+	SAUVEGARDER("Z", "Z (sauvegarder la partie)"),
+	AFFICHER("M", "M (afficher la carte)"),
+
 	AIDE("?", "? (aide)"), 
 	QUITTER("Q", "Q (quitter)");
 
