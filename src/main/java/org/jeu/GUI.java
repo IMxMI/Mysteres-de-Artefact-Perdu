@@ -1,4 +1,4 @@
-package org.example;
+package org.jeu;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -27,11 +27,16 @@ public class GUI implements ActionListener
     }
 
    public void afficheImage( String nomImage) {
-	   	URL imageURL = this.getClass().getClassLoader().getResource("jeu/images/" + nomImage);
+	   	URL imageURL = this.getClass().getClassLoader().getResource("images/" + nomImage);
+
 	   	if( imageURL != null ) {
         	image.setIcon( new ImageIcon( imageURL ));
             fenetre.pack();
         }
+           else{
+            System.err.println("Image non trouvée " + nomImage);
+        }
+
    }
 
     public void enable(boolean ok) {

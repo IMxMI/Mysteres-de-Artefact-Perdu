@@ -1,4 +1,4 @@
-package org.example;
+package org.jeu;
 import java.util.HashMap;
 
 public class Zone 
