@@ -4,7 +4,8 @@ public enum Fragments {
 
     PREMIER  ("Fragment du Cœur",          "Nouvelle‑Dauréa (commerce)"),
     DEUXIEME ("Fragment de la Forêt",      "Clairière des Souvenirs"),
-    TROISIEME("Fragment de la Guerre",     "Camp Tarsis");
+    TROISIEME("Fragment de la Guerre",     "Camp Tarsis"),
+    QUATRIEME("Fragment des Ténèbres",     "La Grotte");
 
     private final String nomAffiche;
     private final String zoneObtention;
@@ -14,7 +15,7 @@ public enum Fragments {
         this.zoneObtention = zoneObtention;
     }
 
-    public String getNom(){
+    public String getNom()          {
         return nomAffiche;
     }
     public String getZoneObtention(){

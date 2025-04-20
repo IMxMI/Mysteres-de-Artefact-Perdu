@@ -9,6 +9,7 @@ public class Joueur {
     private Zone zoneActuelle;
     private Compte compte;
     private final List<Fragments> fragments = new ArrayList<>();
+    private final List<String> indices = new ArrayList<>();
 
     public Joueur(Sac sac, Zone zoneActuelle, Compte compte) {
         this.sac = sac;
@@ -20,8 +21,8 @@ public class Joueur {
         return sac;
     }
 
-    public void setSac(Sac sac) {
-        this.sac = sac;
+    public List<Fragments> getFragments() {
+        return fragments;
     }
 
     public Zone getZoneActuelle() {
@@ -32,6 +33,8 @@ public class Joueur {
         this.zoneActuelle = zoneActuelle;
     }
 
+    public List<String> getIndices()   {   return indices;   }
+
     public Compte getCompte() {
         return compte;
     }
@@ -40,10 +43,12 @@ public class Joueur {
         this.compte = compte;
     }
 
+    public void setSac(Sac sac) {
+        this.sac = sac;
+    }
 
     public void prendreItem(Item item) {
-        // TODO : on vérifie d’abord que l’item est bien présent dans la zone
-        throw new UnsupportedOperationException("Not supported yet.");
+        sac.ajouterItem(item);
     }
 
     public void deposerItem(Item item) {
@@ -58,9 +63,7 @@ public class Joueur {
     public boolean possedeFragment(Fragments f) {
         return fragments.contains(f);
     }
-    public List<Fragments> getFragments() {
-        return fragments;
-    }
+
     public void deposerObjet(Item item) {
         throw new UnsupportedOperationException("Not supported yet.");
     }

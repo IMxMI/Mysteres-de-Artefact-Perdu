@@ -3,6 +3,7 @@ public class Jeu {
 	
     private GUI gui; 
 	private Zone zoneCourante;
+    private Zone zonePrecedente = null;
     private Joueur joueur;
     private Item item;
   
@@ -97,22 +98,25 @@ public class Jeu {
 
 
     private void allerEn(String direction) {
+
         Zone nouvelle = zoneCourante.obtientSortie(direction);
         if (nouvelle == null) {
-            gui.afficher("Pas de sortie " + direction);
-            gui.afficher();
-        } else {
-            zoneCourante = nouvelle;
-
-            if (joueur != null) {
-                joueur.setZoneActuelle(zoneCourante);
-            }
-
-            gui.afficher(zoneCourante.descriptionLongue());
-            gui.afficher();
-            gui.afficheImage(zoneCourante.nomImage());
+            gui.afficher("Pas de sortie " + direction + "\n");
+            return;
         }
+
+        zonePrecedente = zoneCourante;
+        zoneCourante   = nouvelle;
+
+        if (joueur != null) {
+            joueur.setZoneActuelle(zoneCourante);
+        }
+
+        gui.afficher(zoneCourante.descriptionLongue());
+        gui.afficher();
+        gui.afficheImage(zoneCourante.nomImage());
     }
+
 
 
     private void terminer() {
@@ -126,7 +130,19 @@ public class Jeu {
     }
 
     private void revenir() {
-        // TODO: Gérer le retour à la zone précédente 
+        if (zonePrecedente == null) {
+            gui.afficher("Vous n’avez aucun chemin à rebrousser.\n");
+            return;
+        }
+        Zone tmp = zoneCourante;
+        zoneCourante = zonePrecedente;
+        zonePrecedente = tmp;
+        if (joueur != null) joueur.setZoneActuelle(zoneCourante);
+
+        gui.afficher("Vous faites demi‑tour…\n");
+        gui.afficher(zoneCourante.descriptionLongue());
+        gui.afficher();
+        gui.afficheImage(zoneCourante.nomImage());
     }
 
     private void test() {
@@ -134,19 +150,47 @@ public class Jeu {
     }
 
     private void vendre() {
-        // TODO: Vendre un objet à un PNJ ou à un marchand 
+        final String ECLAT = "Éclat de cristal";
+        if (!zoneCourante.toString().equalsIgnoreCase("Nouvelle-Dauréa")) {
+            gui.afficher("Vous ne pouvez vendre qu’au comptoir de Nouvelle‑Dauréa.\n");
+            return;
+        }
+        if (!joueur.getSac().listeNoms().contains(ECLAT)) {
+            gui.afficher("Vous n’avez pas l’" + ECLAT + " à vendre.\n");
+            return;
+        }
+
+        /* on enlève l’objet et on crédite le fragment 1 ---------------- */
+        joueur.getSac().enleverItem(
+                joueur.getSac().getItems()
+                        .stream()
+                        .filter(i -> i.getNom().equals(ECLAT))
+                        .findFirst()
+                        .orElse(null)
+        );
+        if (!joueur.getFragments().contains(Fragments.PREMIER)) {
+            joueur.getFragments().add(Fragments.PREMIER);
+        }
+
+        gui.afficher("Vous vendez l’éclat : le premier fragment vous est remis !\n");
     }
 
     private void voirIndices() {
-        // TODO: Afficher les indices collectés par le joueur
+        if (joueur.getIndices().isEmpty()) {
+            gui.afficher("Vous n’avez recueilli aucun indice pour l’instant.\n");
+        } else {
+            gui.afficher("Indices collectés : " + joueur.getIndices() + "\n");
+        }
     }
 
     private void afficherInventaire() {
-        // TODO: Lister les objets dans le sac du joueur
+        gui.afficher("Inventaire («" + joueur.getSac().getItems().size()
+                + "/5») : " + joueur.getSac().listeNoms() + "\n");
     }
 
     private void afficherCarte() {
-        // TODO: Afficher un plan du monde (texte ou image)
+        gui.afficheImage("carte.png");          // située dans resources/images/
+        gui.afficher();                         // saut de ligne seulement
     }
 
     public void connecterJoueur(Compte compte) {
