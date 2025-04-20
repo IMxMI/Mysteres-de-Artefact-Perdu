@@ -1,11 +1,14 @@
-package org.example;
+package org.jeu;
 
 
+import java.util.ArrayList;
+import java.util.List;
 public class Joueur {
 
     private Sac sac;
     private Zone zoneActuelle;
     private Compte compte;
+    private final List<Fragments> fragments = new ArrayList<>();
 
     public Joueur(Sac sac, Zone zoneActuelle, Compte compte) {
         this.sac = sac;
@@ -40,18 +43,30 @@ public class Joueur {
 
     public void prendreItem(Item item) {
         // TODO : on vérifie d’abord que l’item est bien présent dans la zone
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     public void deposerItem(Item item) {
-        // TODO : vérifier que l’objet est bien dans le sac,
+        sac.enleverItem(item);
     }
     
     public void communiquerAvecPNJ() {
         // TODO : implémenter la logique de communication selon le scénario
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    public boolean possedeFragment(String nomFragment) {
-        // TODO : parcourir sac.items pour trouver si l’objet "fragment" est présent
-        return false;
+    public boolean possedeFragment(Fragments f) {
+        return fragments.contains(f);
     }
+    public List<Fragments> getFragments() {
+        return fragments;
+    }
+    public void deposerObjet(Item item) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+    public void sauvegarderJeu() {
+        SauvegardeManager.sauvegarder(this);
+        System.out.println("Partie sauvegardée !\n");
+    }
+
 }

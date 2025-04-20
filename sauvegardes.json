@@ -1,0 +1,35 @@
+{
+  "ff\t": {
+    "username": "ff\t",
+    "password": "ff",
+    "zoneCourante": "Nouvelle-Dauréa",
+    "inventaire": []
+  },
+  "ff": {
+    "username": "ff",
+    "password": "ff",
+    "zoneCourante": "La Grotte",
+    "inventaire": []
+  },
+  "nn": {
+    "username": "nn",
+    "password": "nn",
+    "zoneCourante": "La Grotte",
+    "inventaire": [],
+    "fragments": []
+  },
+  "maxime": {
+    "username": "maxime",
+    "password": "cc",
+    "zoneCourante": "La Zone Désertique",
+    "inventaire": [],
+    "fragments": []
+  },
+  "cc": {
+    "username": "cc",
+    "password": "cc",
+    "zoneCourante": "Nouvelle-Dauréa",
+    "inventaire": [],
+    "fragments": []
+  }
+}

@@ -2,8 +2,9 @@ package org.jeu;
 public class Jeu {
 	
     private GUI gui; 
-	  private Zone zoneCourante;
+	private Zone zoneCourante;
     private Joueur joueur;
+    private Item item;
   
     public Jeu() {
         creerCarte();
@@ -11,9 +12,9 @@ public class Jeu {
     }
 
     public void setGUI( GUI g) { gui = g; afficherMessageDeBienvenue(); }
-    
+    Zone [] zones = new Zone [6];
     private void creerCarte() {
-        Zone [] zones = new Zone [6];
+        
         zones[0] = new Zone("Nouvelle-Dauréa", "NouvelleDaurea.png" );
         zones[1] = new Zone("La Clairière des Souvenirs", "ClairiereSouvenir.png" );
         zones[2] = new Zone("La Zone Désertique", "ZoneDesertique.png" );
@@ -36,6 +37,7 @@ public class Jeu {
 
         zones[4].ajouteSortie(Sortie.EST, zones[5]);
         zoneCourante = zones[0];
+
     }
 
     private void afficherLocalisation() {
@@ -55,99 +57,34 @@ public class Jeu {
     public void traiterCommande(String commandeLue) {
     	gui.afficher( "> "+ commandeLue + "\n");
         switch (commandeLue.toUpperCase()) {
-            // Déplacements
-            case "N":
-            case "NORD":
-                allerEn("NORD");
-                break;
-            case "S":
-            case "SUD":
-                allerEn("SUD");
-                break;
-            case "E":
-            case "EST":
-                allerEn("EST");
-                break;
-            case "O":
-            case "OUEST":
-                allerEn("OUEST");
-                break;
-            case "H":
-            case "HAUT":
-                allerEn("HAUT");
-                break;
-            case "B":
-            case "BAS":
-                allerEn("BAS");
-                break;
-
-            case "R":
-            case "REVENIR":
-                revenir();
-                break;
-
-            case "P":
-            case "PRENDRE":
-                // TODO : item à définir 
+            case "N", "NORD" -> allerEn("NORD");
+            case "S", "SUD" -> allerEn("SUD");
+            case "E", "EST" -> allerEn("EST");
+            case "O", "OUEST" -> allerEn("OUEST");
+            case "H", "HAUT" -> allerEn("HAUT");
+            case "B", "BAS" -> allerEn("BAS");
+            case "R", "REVENIR" -> revenir();
+            case "P", "PRENDRE" -> 
                 joueur.prendreItem(item);
-                break;
-
-            case "D":
-            case "DEPOSER":
-                // TODO : item à définir 
+            case "D", "DEPOSER" -> 
                 joueur.deposerObjet(item);
-                break;
+            case "A", "A(FFICHER L'INVENTAIRE ACTUEL)" -> afficherInventaire();
+            case "T", "TEST" -> test();
+            case "C", "COMMUNIQUER" -> joueur.communiquerAvecPNJ();
 
-            case "A":
-            case "A(FFICHER L'INVENTAIRE ACTUEL)":
-                afficherInventaire();
-                break;
+            case "V", "VENDRE" -> vendre();
+            case "X", "VOIR_INDICE" -> voirIndices();
 
-            case "T":
-            case "TEST":
-                test();
-                break;
+            case "Z", "SAUVEGARDER" -> joueur.sauvegarderJeu();
+            case "M", "AFFICHER" -> afficherCarte();
 
-            case "C":
-            case "COMMUNIQUER":
-                joueur.communiquerAvecPNJ();
-                break;
+            case "?", "AIDE" -> afficherAide();
+            case "Q", "QUITTER" -> terminer();
 
-            case "V":
-            case "VENDRE":
-                vendre();
-                break;
-
-            case "X":
-            case "VOIR_INDICE":
-                voirIndices();
-                break;
-
-            case "Z":
-            case "SAUVEGARDER":
-                sauvegarderJeu();
-                break;
-
-            case "M":
-            case "AFFICHER":
-                afficherCarte();
-                break;
-
-            case "?":
-            case "AIDE":
-                afficherAide();
-                break;
-
-            case "Q":
-            case "QUITTER":
-                terminer();
-                break;
-
-            default:
-                gui.afficher("Commande inconnue. Tapez \"?\" pour la liste des commandes.");
-                break;
+            default -> gui.afficher("Commande inconnue. Tapez \"?\" pour la liste des commandes.");
         }
-    }
+        // Déplacements
+            }
 
     private void afficherAide() {
         gui.afficher("Etes-vous perdu ?");
@@ -158,23 +95,34 @@ public class Jeu {
         gui.afficher();
     }
 
+
     private void allerEn(String direction) {
-    	Zone nouvelle = zoneCourante.obtientSortie( direction);
-    	if ( nouvelle == null ) {
-        	gui.afficher( "Pas de sortie " + direction);
-    		gui.afficher();
-    	}
-        else {
-        	zoneCourante = nouvelle;
-        	gui.afficher(zoneCourante.descriptionLongue());
-        	gui.afficher();
-        	gui.afficheImage(zoneCourante.nomImage());
+        Zone nouvelle = zoneCourante.obtientSortie(direction);
+        if (nouvelle == null) {
+            gui.afficher("Pas de sortie " + direction);
+            gui.afficher();
+        } else {
+            zoneCourante = nouvelle;
+
+            if (joueur != null) {
+                joueur.setZoneActuelle(zoneCourante);
+            }
+
+            gui.afficher(zoneCourante.descriptionLongue());
+            gui.afficher();
+            gui.afficheImage(zoneCourante.nomImage());
         }
     }
-    
+
+
     private void terminer() {
     	gui.afficher( "Au revoir...");
     	gui.enable( false);
+    }
+
+    // Jeu.java
+    public Zone getZoneDepart() {
+        return zones[0];
     }
 
     private void revenir() {
@@ -182,7 +130,7 @@ public class Jeu {
     }
 
     private void test() {
-        // TODO: Exécuter une action de test ou un débogage
+        // TODO: Exécuter une action de test
     }
 
     private void vendre() {
@@ -197,13 +145,38 @@ public class Jeu {
         // TODO: Lister les objets dans le sac du joueur
     }
 
-    private void sauvegarderJeu() {
-        // TODO: Mettre en place la logique de sauvegarde
-    }
-
     private void afficherCarte() {
         // TODO: Afficher un plan du monde (texte ou image)
     }
 
+    public void connecterJoueur(Compte compte) {
+
+        Zone pos = trouverZone(compte.getZoneCourante());
+
+        Sac sac = new Sac();
+        for (String nomItem : compte.getInventaire()) {
+            sac.ajouterItem(new Item(nomItem, ""));
+        }
+
+        Joueur j = new Joueur(sac, pos, compte);
+        for (String nomFrag : compte.getFragments()) {
+            j.getFragments().add(Fragments.valueOf(nomFrag));
+        }
+
+        zoneCourante = pos;
+        joueur       = j;
+    }
+
+    public Zone trouverZone(String nomZone) {
+        if (nomZone == null) {
+            return zones[0];
+        }
+        for (Zone z : zones) {
+            if (z != null && z.toString().equalsIgnoreCase(nomZone.trim())) {
+                return z;
+            }
+        }
+        return zones[0];
+    }
 
 }

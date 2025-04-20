@@ -4,12 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Sac {
-    private List<Item> items;
+    private final List<Item> items;
     private static final int CAPACITE_MAX = 5;
 
     public Sac() {
         items = new ArrayList<>();
     }
+
 
     public boolean ajouterItem(Item item) {
         if (items.size() >= CAPACITE_MAX) {
@@ -35,4 +36,20 @@ public class Sac {
 
         return items;
     }
+
+    public void vider() {
+        items.clear();
+     }
+
+    public List<String> listeNoms() {
+
+        return items.stream().map(Item::getNom).toList();
+    }
+
+    // Sac.java
+    List<String> nomsItems() {
+        return items.stream().map(Item::getNom).toList();
+    }
+
+
 }
