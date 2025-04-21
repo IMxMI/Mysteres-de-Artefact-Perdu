@@ -22,6 +22,8 @@ public class Jeu {
         zones[4] = new Zone("La Grotte", "Grotte.png" );
         zones[5] = new Zone("Laboratoire Abandonnée", "laboratoire.png" );
 
+
+
         zones[0].ajouteSortie(Sortie.NORD, zones[1]);
         zones[0].ajouteSortie(Sortie.EST, zones[2]);
 
@@ -37,6 +39,14 @@ public class Jeu {
 
         zones[4].ajouteSortie(Sortie.EST, zones[5]);
         zoneCourante = zones[0];
+
+        Quete queteCristal = new Quete("Trouver le cristal", "Apportez un cristal au PNJ.", "cristal", "PREMIER");
+        PNJ pnjNouvelleDaurea = new PNJ("Ancien", "Bonjour, aventurier, j'ai entendu parler que tu rechercher les fragments d'une relique du passé. Je pense pouvoir t'aider !", queteCristal);
+        zones[0].ajouterPNJ(pnjNouvelleDaurea);
+
+        Quete queteEnigme = new Quete("Résoudre l'énigme", "Répondez à l'énigme du PNJ.", "reponse_correcte", "DEUXIEME");
+        PNJ pnjClairiere = new PNJ("Sage", "Je vais vous poser une énigme...", queteEnigme);
+        zones[1].ajouterPNJ(pnjClairiere);
 
     }
 
@@ -70,8 +80,14 @@ public class Jeu {
                 joueur.deposerObjet(item);
             case "A", "A(FFICHER L'INVENTAIRE ACTUEL)" -> afficherInventaire();
             case "T", "TEST" -> test();
-            case "C", "COMMUNIQUER" -> joueur.communiquerAvecPNJ();
-
+            case "C", "COMMUNIQUER" -> {
+                PNJ pnj = zoneCourante.getPNJ();
+                if (pnj != null) {
+                    gui.afficher(pnj.interagir(joueur));
+                } else {
+                    gui.afficher("Il n'y a personne à qui parler ici.");
+                }
+            }
             case "V", "VENDRE" -> vendre();
             case "X", "VOIR_INDICE" -> voirIndices();
 
@@ -81,6 +97,11 @@ public class Jeu {
             case "?", "AIDE" -> afficherAide();
             case "Q", "QUITTER" -> terminer();
 
+            case "PO" -> {
+                Item item1 = new Item("cristal", "Un cristal scintillant.");
+                joueur.getSac().ajouterItem(item1);
+                System.err.println(joueur.getSac().getItems().toString());
+            }
             default -> gui.afficher("Commande inconnue. Tapez \"?\" pour la liste des commandes.");
         }
         // Déplacements

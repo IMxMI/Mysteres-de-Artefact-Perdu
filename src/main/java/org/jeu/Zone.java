@@ -5,7 +5,9 @@ public class Zone
 {
     private String description;
     private String nomImage;
-    private HashMap<String,Zone> sorties;   
+    private HashMap<String,Zone> sorties;
+    private PNJ pnj;
+    private Item[] items;
 
     public Zone(String description, String image) {
         this.description = description;
@@ -26,7 +28,11 @@ public class Zone
     }
 
     public String descriptionLongue()  {
-        return "Vous êtes dans " + description + "\nSorties : " + sorties();
+        String text = "Vous êtes dans " + description + "\nSorties : " + sorties();
+        if(pnj != null) {
+            text += "\nVous voyez " + pnj.getNom() + " C ou COMMUNIQUER pour interagir.";
+        }
+        return text;
     }
 
     private String sorties() {
@@ -35,6 +41,14 @@ public class Zone
 
     public Zone obtientSortie(String direction) {
     	return sorties.get(direction);
+    }
+
+    public PNJ getPNJ() {
+        return pnj;
+    }
+
+    public void ajouterPNJ(PNJ pnjNouvelleDaurea) {
+        this.pnj = pnjNouvelleDaurea;
     }
 }
 

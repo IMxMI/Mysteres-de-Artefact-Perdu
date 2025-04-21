@@ -23,7 +23,6 @@ public class Sac {
     }
 
     public boolean enleverItem(Item item) {
-
         return items.remove(item);
     }
 
@@ -52,4 +51,7 @@ public class Sac {
     }
 
 
+    public boolean possedeItem(String condition) {
+        return items.stream().anyMatch(item -> item.getNom().equals(condition));
+    }
 }
