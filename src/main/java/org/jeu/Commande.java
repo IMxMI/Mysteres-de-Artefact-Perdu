@@ -56,5 +56,12 @@ public enum Commande {
 		}
 		return resultat;
 	}
+	public static Commande depuisAbreviation(String abbr) {
+		for (Commande c : values()) {
+			if (c.abreviation.equalsIgnoreCase(abbr)) return c;
+		}
+		return null;
+	}
+
 
 }
