@@ -31,9 +31,29 @@ public class EnigmeInteractive implements Enigme {
     }
 
     private void SuperSimon() {
-        // TODO : à implémenter
-        System.out.println("C'est parti pour le Super Simon...");
+        String symboles = "@#$%&*";
+        String sequence = "";
+
+        for (int i = 0; i < 6; i++) {
+            int alea = (int)(Math.random() * symboles.length());
+            char symbole = symboles.charAt(alea);
+            sequence = sequence + symbole;
+        }
+
+        String solution = sequence.toString();
+        JOptionPane.showMessageDialog(null, "Retenez cette suite :\n" + solution);
+
+        String reponse = JOptionPane.showInputDialog("Tapez la séquence :");
+
+        if (reponse != null && reponse.replaceAll("\\s+", "").equals(solution)) {
+            JOptionPane.showMessageDialog(null, "Bravo !");
+        } else {
+            JOptionPane.showMessageDialog(null, "Raté ! C'était : " + solution);
+        }
     }
+
+
+
 
     private void JustePrix() {
         final int code = ThreadLocalRandom.current().nextInt(1000, 10000);
