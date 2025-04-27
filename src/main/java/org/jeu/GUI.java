@@ -1,6 +1,5 @@
 package org.jeu;
-import java.awt.BorderLayout;
-import java.awt.Dimension;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.URL;
@@ -35,18 +34,18 @@ public class GUI implements ActionListener
         afficher("\n");
     }
 
-   public void afficheImage( String nomImage) {
-	   	URL imageURL = this.getClass().getClassLoader().getResource("images/" + nomImage);
+    public void afficheImage(String nomImage) {
+        URL imageURL = this.getClass().getClassLoader().getResource("images/" + nomImage);
 
-	   	if( imageURL != null ) {
-        	image.setIcon( new ImageIcon( imageURL ));
+        if (imageURL != null) {
+            ImageIcon icon = new ImageIcon(imageURL);
+            Image imageRedimensionnee = icon.getImage().getScaledInstance(750, 750, java.awt.Image.SCALE_SMOOTH);
+            image.setIcon(new ImageIcon(imageRedimensionnee));
             fenetre.pack();
-        }
-           else{
+        } else {
             System.err.println("Image non trouvée " + nomImage);
         }
-
-   }
+    }
 
     public void enable(boolean ok) {
         entree.setEditable(ok);

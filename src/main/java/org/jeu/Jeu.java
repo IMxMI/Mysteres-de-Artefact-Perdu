@@ -16,12 +16,12 @@ public class Jeu {
     Zone [] zones = new Zone [6];
     private void creerCarte() {
         
-        zones[0] = new Zone("Nouvelle-Dauréa", "NouvelleDaurea.png" );
-        zones[1] = new Zone("La Clairière des Souvenirs", "ClairiereSouvenir.png" );
-        zones[2] = new Zone("La Zone Désertique", "ZoneDesertique.png" );
-        zones[3] = new Zone("Camp Tarsis", "CampTarsis.png" );
-        zones[4] = new Zone("La Grotte", "Grotte.png" );
-        zones[5] = new Zone("Laboratoire Abandonnée", "laboratoire.png" );
+        zones[0] = new Zone("Nouvelle-Dauréa", "ville01.png" );
+        zones[1] = new Zone("La Clairière des Souvenirs", "foret01.png" );
+        zones[2] = new Zone("La Zone Désertique", "desert01.png" );
+        zones[3] = new Zone("Camp Tarsis", "camp01.png" );
+        zones[4] = new Zone("La Grotte", "grotte01.png" );
+        zones[5] = new Zone("Laboratoire Abandonnée", "labo01.png" );
 
 
 
@@ -85,6 +85,13 @@ public class Jeu {
                 PNJ pnj = zoneCourante.getPNJ();
                 if (pnj != null) {
                     gui.afficher(pnj.interagir(joueur));
+                    if (zoneCourante.toString().equalsIgnoreCase("Nouvelle-Dauréa")) {
+                        if (joueur.getSac().possedeItem("cristal")) {
+                            gui.afficheImage("ville03.png");
+                        } else {
+                            gui.afficheImage("ville02.png");
+                        }
+                    }
                 } else {
                     gui.afficher("Il n'y a personne à qui parler ici.");
                 }
@@ -101,7 +108,6 @@ public class Jeu {
             case "PO" -> {
                 Item item1 = new Item("cristal", "Un cristal scintillant.");
                 joueur.getSac().ajouterItem(item1);
-                System.err.println(joueur.getSac().getItems().toString());
             }
             default -> gui.afficher("Commande inconnue. Tapez \"?\" pour la liste des commandes.");
         }
