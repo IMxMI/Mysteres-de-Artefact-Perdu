@@ -51,11 +51,14 @@ public class Jeu {
         zones[1].ajouterPNJ(pnjClairiere);
 
 
-        EnigmeInteractive enigmeCadenat = new EnigmeInteractive(EnigmeInteractive.Type.JUSTE_PRIX);
-        Quete queteCadenat = new Quete("Résoudre l'énigme", "Trouvez le code à 4 chiffres du cadenas en 60 secondes ou le garde vous repérera !", "reponse_correcte", "TROISIEME", enigmeCadenat);
-        zones[3].ajouterPNJ(new PNJ("Un coffre derrière le garde",
-                "Devant toi se tient un vieux coffre verrouillé. Trouvez le code à 4 chiffres du cadenas en 60 secondes ou le garde vous repérera !",
-                queteCadenat));
+        EnigmeInteractive enigmeCadenas = new EnigmeInteractive(EnigmeInteractive.Type.JUSTE_PRIX);
+        Quete queteCadenas = new Quete("Résoudre l'énigme", "Trouver un code à 4 chiffres en 60 secondes", "reponse_correcte", "TROISIEME", enigmeCadenas);
+        zones[3].ajouterPNJ(new PNJ("Un coffre derrière le garde", "", queteCadenas));
+
+
+        EnigmeQuestionReponse enigmeGrotte = new EnigmeQuestionReponse("Il est marqué : 'Implorez l'artefact pour qu'il vous accorde sa bénédiction...' ", r -> r.contains("oculus") || r.contains("Oculus") || r.contains("OCULUS"));
+        Quete queteGrotte = new Quete("Implorer l'artefact", "La réponse du joueur doit contenir le nom de l'artefact", "reponse_correcte", "QUATRIEME", enigmeGrotte);
+        zones[4].ajouterPNJ(new PNJ("Une inscription sur le mur", "", queteGrotte));
 
         EnigmeInteractive enigmeMastermind = new EnigmeInteractive(EnigmeInteractive.Type.MASTERMIND);
         Quete queteMastermind = new Quete(
@@ -112,6 +115,10 @@ public class Jeu {
                     }
                     //On change d'abord l'image avant d'éxecuter l'interaction pour l'énigme du cadenas
                     gui.afficher(pnj.interagir(joueur));
+
+                    if (zoneCourante.toString().equalsIgnoreCase("La Grotte")){
+                        gui.afficheImage("grotte03.png");
+                    }
 
                     if (zoneCourante.toString().equalsIgnoreCase("Nouvelle-Dauréa")) {
                         if (joueur.getSac().possedeItem("cristal")) {

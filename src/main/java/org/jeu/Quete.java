@@ -5,7 +5,7 @@ public class Quete {
     private String description;
     private String condition;
     private String recompense;
-    private EnigmeInteractive enigme;
+    private Enigme enigme;
     private boolean terminee = false;
 
     public Quete(String nom, String description, String condition, String recompense) {
@@ -15,7 +15,7 @@ public class Quete {
         this.recompense = recompense;
     }
 
-    public Quete(String nom, String description, String condition, String recompense, EnigmeInteractive enigme) {
+    public Quete(String nom, String description, String condition, String recompense, Enigme enigme) {
         this.nom = nom;
         this.description = description;
         this.condition = condition;
@@ -50,7 +50,7 @@ public class Quete {
         return terminee;
     }
 
-    public EnigmeInteractive getEnigme() {
+    public Enigme getEnigme() {
         return enigme;
     }
 
