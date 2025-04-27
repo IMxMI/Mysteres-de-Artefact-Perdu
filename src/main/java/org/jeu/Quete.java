@@ -26,7 +26,9 @@ public class Quete {
     public boolean resoudreEnigme(Joueur joueur) {
         if (enigme != null && enigme.estResolu()) {
             terminee = true;
-            joueur.getFragments().add(Fragments.valueOf(recompense));
+            if(recompense != ""){
+                joueur.getFragments().add(Fragments.valueOf(recompense));
+            }
             return true;
         }
         return false;

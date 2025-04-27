@@ -57,6 +57,19 @@ public class Jeu {
                 "Devant toi se tient un vieux coffre verrouillé. Trouvez le code à 4 chiffres du cadenas en 60 secondes ou le garde vous repérera !",
                 queteCadenat));
 
+        EnigmeInteractive enigmeMastermind = new EnigmeInteractive(EnigmeInteractive.Type.MASTERMIND);
+        Quete queteMastermind = new Quete(
+                "Activer le terminal",
+                "Trouvez le code secret pour activer le terminal.",
+                "code_terminal",
+                "",
+                enigmeMastermind
+        );
+        zones[5].ajouterPNJ(new PNJ(
+                "IA du terminal",
+                "Bienvenue, humain. Pour activer ce terminal, vous devez résoudre une énigme.",
+                queteMastermind
+        ));
     }
 
     private void afficherLocalisation() {
