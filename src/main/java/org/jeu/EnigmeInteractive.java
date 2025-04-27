@@ -40,16 +40,16 @@ public class EnigmeInteractive implements Enigme {
     }
 
     private boolean SuperSimon() {
-        String symboles = "*"; //@#$%&*
-        String sequence = "";
+        String symboles = "@#$%&*";
+        StringBuilder sequence = new StringBuilder();
 
-        for (int i = 0; i < 6; i++) {
+        for (int i = 0; i < 7; i++) {
             int alea = (int)(Math.random() * symboles.length());
             char symbole = symboles.charAt(alea);
-            sequence = sequence + symbole;
+            sequence.append(symbole);
         }
 
-        String solution = sequence.toString();
+        String solution = sequence.toString().toString();
         JOptionPane.showMessageDialog(null, "Retenez cette suite :\n" + solution);
 
         String reponse = JOptionPane.showInputDialog("Tapez la séquence :");
@@ -70,15 +70,14 @@ public class EnigmeInteractive implements Enigme {
     private void JustePrix() {
         final int code = ThreadLocalRandom.current().nextInt(1000, 10000);
         Instant debut = Instant.now();
-        JOptionPane.showMessageDialog(null, "Vous avez 60 secondes pour deviner le code à 4 chiffres avant que le garde ne vous voit.");
+        JOptionPane.showMessageDialog(null, "Vous avez 30 secondes pour deviner le code à 4 chiffres avant que le garde ne vous voit.");
         while (true) {
             String s = JOptionPane.showInputDialog("Trouvez le code :");
-            // Si le joueur annule ou ferme la fenêtre, on quitte
             if (s == null) return;
-            // On calcule le temps écoulé et s'il dépasse 60, le joueur a perdu
             long secondes = Instant.now().getEpochSecond() - debut.getEpochSecond();
-            if (secondes > 60) {
+            if (secondes > 30) {
                 JOptionPane.showMessageDialog(null, "Temps écoulé, le garde vous a attrapé !");
+                jeu.gameOver();
                 break;
             }
             try {
@@ -98,7 +97,7 @@ public class EnigmeInteractive implements Enigme {
 
     private void Mastermind() {
         if(jeu.getJoueur().getFragments().size() != 4){
-            jeu.getGUI().afficher("Vous n'avez pas assez de fragments pour activer l'odinateur\nvous avez causer la fin du monde.");
+            jeu.gameOver();
             return;
         }
         final int MAX_ESSAIS = 5;
@@ -161,7 +160,7 @@ public class EnigmeInteractive implements Enigme {
         }
 
         JOptionPane.showMessageDialog(null, "Vous avez échoué ! Le code était : " + String.join(" ", code));
-        System.exit(0); // Fin du jeu
+        jeu.gameOver();
     }
 
     private void PilliersOrdre() {

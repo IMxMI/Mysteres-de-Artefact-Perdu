@@ -13,7 +13,7 @@ public class Jeu {
     }
 
     public void setGUI( GUI g) { gui = g; afficherMessageDeBienvenue(); }
-    Zone [] zones = new Zone [6];
+    Zone [] zones = new Zone [7];
     private void creerCarte() {
         
         zones[0] = new Zone("Nouvelle-Dauréa", "ville01.png" );
@@ -22,6 +22,7 @@ public class Jeu {
         zones[3] = new Zone("Camp Tarsis", "camp01.png" );
         zones[4] = new Zone("La Grotte", "grotte01.png" );
         zones[5] = new Zone("Laboratoire Abandonnée", "labo01.png" );
+        zones[6] = new Zone("game over", "gameover.png" );
 
         zones[0].ajouteSortie(Sortie.NORD, zones[1]);
         zones[0].ajouteSortie(Sortie.EST, zones[2]);
@@ -40,20 +41,20 @@ public class Jeu {
         zoneCourante = zones[0];
 
         Quete queteCristal = new Quete("Trouver le cristal", "Apportez un cristal au PNJ.", "cristal", "PREMIER");
-        PNJ pnjNouvelleDaurea = new PNJ("Ancien", "Bonjour, aventurier, j'ai entendu parler que tu rechercher les fragments d'une relique du passé. Je pense pouvoir t'aider !", queteCristal);
+        PNJ pnjNouvelleDaurea = new PNJ("Le Marchand", "Bonjour, aventurier, j'ai entendu parler que tu rechercher les fragments d'une relique du passé. \nJe pense pouvoir t'aider !", queteCristal);
         zones[0].ajouterPNJ(pnjNouvelleDaurea);
 
         EnigmeInteractive enigme = new EnigmeInteractive(EnigmeInteractive.Type.SIMON);
         Quete queteEnigme = new Quete("Résoudre l'énigme", "Répondez à l'énigme du PNJ.", "reponse_correcte", "DEUXIEME", enigme);
-        PNJ pnjClairiere = new PNJ("Sage", "Je vais vous poser une énigme...", queteEnigme);
+        PNJ pnjClairiere = new PNJ("Un Sage", "Je vais vous poser une énigme...", queteEnigme);
         zones[1].ajouterPNJ(pnjClairiere);
 
         EnigmeInteractive enigmePilliers = new EnigmeInteractive(EnigmeInteractive.Type.PILLIERS_ORDRE, this);
         Quete quetePilliers = new Quete("Résoudre l'énigme des piliers", "Trouvez l'ordre correct des piliers pour obtenir le cristal.", "reponse_correcte", "", enigmePilliers);
-        PNJ pnjDesert = new PNJ("Piliers", "Seul celui qui résout l'énigme des piliers peut obtenir le cristal.", quetePilliers);
+        PNJ pnjDesert = new PNJ("des Piliers antique", "Seul celui qui résout l'énigme des piliers peut obtenir le cristal.", quetePilliers);
         zones[2].ajouterPNJ(pnjDesert);
 
-        EnigmeInteractive enigmeCadenas = new EnigmeInteractive(EnigmeInteractive.Type.JUSTE_PRIX);
+        EnigmeInteractive enigmeCadenas = new EnigmeInteractive(EnigmeInteractive.Type.JUSTE_PRIX, this);
         Quete queteCadenas = new Quete("Résoudre l'énigme", "Trouver un code à 4 chiffres en 60 secondes", "reponse_correcte", "TROISIEME", enigmeCadenas);
         zones[3].ajouterPNJ(new PNJ("Un coffre derrière le garde", "", queteCadenas));
 
@@ -112,6 +113,10 @@ public class Jeu {
                 PNJ pnj = zoneCourante.getPNJ();
                 if (pnj != null) {
 
+                    if(zoneCourante.toString().equalsIgnoreCase("La Clairière des Souvenirs")){
+                        gui.afficheImage("foret02.png");
+                    }
+
                     if (zoneCourante.toString().equalsIgnoreCase("Camp Tarsis")){
                         gui.afficheImage("camp02.png");
                     }
@@ -164,6 +169,14 @@ public class Jeu {
         gui.afficher();
     }
 
+
+    public void gameOver() {
+        zoneCourante = zones[6];
+        gui.afficher("Vous êtes mort !\n");
+        gui.afficher("Vous devez recommencer le jeu.\n");
+        gui.afficheImage("gameover.png");
+        gui.enable(false);
+    }
 
     private void allerEn(String direction) {
 
