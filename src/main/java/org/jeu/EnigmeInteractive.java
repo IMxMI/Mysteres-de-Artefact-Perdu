@@ -5,30 +5,59 @@ import java.time.Instant;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
+/**
+ * Classe représentant une énigme interactive dans le jeu.
+ */
 public class EnigmeInteractive implements Enigme {
+    /**
+     * Enumération des types d'énigmes.
+     */
     public enum Type {
         SIMON, JUSTE_PRIX, MASTERMIND, PILLIERS_ORDRE
     }
 
+    /**
+     * Type de l'énigme.
+     */
     private final Type type;
+    /**
+     * Indique si l'énigme est résolue.
+     */
     private boolean resolu = false;
 
+    /**
+     * Constructeur de la classe EnigmeInteractive.
+     *
+     * @param type le type d'énigme
+     */
     public EnigmeInteractive(Type type) {
         this.type = type;
     }
 
     private Jeu jeu;
 
+    /**
+     * Constructeur de la classe EnigmeInteractive.
+     *
+     * @param type le type d'énigme
+     * @param jeu  le jeu associé
+     */
     public EnigmeInteractive(Type type, Jeu jeu) {
         this.type = type;
         this.jeu = jeu;
     }
 
+    /**
+     * @return true si l'énigme est résolue, false sinon
+     */
     @Override
     public boolean estResolu() {
         return resolu;
     }
 
+    /**
+     * Pose l'énigme au joueur.
+     */
     @Override
     public void poser() {
         switch (type) {
@@ -39,6 +68,10 @@ public class EnigmeInteractive implements Enigme {
         }
     }
 
+    /**
+     * Enigme du jeu Simon.
+     * @return
+     */
     private boolean SuperSimon() {
         String symboles = "@#$%&*";
         StringBuilder sequence = new StringBuilder();
@@ -121,6 +154,7 @@ public class EnigmeInteractive implements Enigme {
             }
             if (java.util.Arrays.equals(propositionCouleurs, code)) {
                 JOptionPane.showMessageDialog(null, "Félicitations ! Vous avez trouvé le code : " + String.join(" ", code) + "\n Ordinateur déverrouillé, activation des processus.");
+                jeu.gameWin();
                 resolu = true;
 
                 if (jeu != null && jeu.getGUI() != null) {
