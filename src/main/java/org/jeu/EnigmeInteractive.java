@@ -61,20 +61,21 @@ public class EnigmeInteractive implements Enigme {
     private void JustePrix() {
         final int code = ThreadLocalRandom.current().nextInt(1000, 10000);
         Instant debut = Instant.now();
+        JOptionPane.showMessageDialog(null, "Vous avez 60 secondes pour deviner le code à 4 chiffres avant que le garde ne vous voit.");
         while (true) {
-            String s = JOptionPane.showInputDialog("Devinez le code à 4 chiffres (en 60 secondes):");
+            String s = JOptionPane.showInputDialog("Trouvez le code :");
             // Si le joueur annule ou ferme la fenêtre, on quitte
             if (s == null) return;
             // On calcule le temps écoulé et si il dépasse 60, le joueur a perdu
             long secondes = Instant.now().getEpochSecond() - debut.getEpochSecond();
             if (secondes > 60) {
-                JOptionPane.showMessageDialog(null, "Temps écoulé !");
+                JOptionPane.showMessageDialog(null, "Temps écoulé, le garde vous a attrapé !");
                 break;
             }
             try {
                 int guess = Integer.parseInt(s);
                 if (guess == code) {
-                    JOptionPane.showMessageDialog(null, "Bravo !");
+                    JOptionPane.showMessageDialog(null, "Le cadenas est dévérouillé !");
                     resolu = true;
                     break;
                 } else {

@@ -50,6 +50,13 @@ public class Jeu {
         PNJ pnjClairiere = new PNJ("Sage", "Je vais vous poser une énigme...", queteEnigme);
         zones[1].ajouterPNJ(pnjClairiere);
 
+
+        EnigmeInteractive enigmeCadenat = new EnigmeInteractive(EnigmeInteractive.Type.JUSTE_PRIX);
+        Quete queteCadenat = new Quete("Résoudre l'énigme", "Trouvez le code à 4 chiffres du cadenas en 60 secondes ou le garde vous repérera !", "reponse_correcte", "TROISIEME", enigmeCadenat);
+        zones[3].ajouterPNJ(new PNJ("Un coffre derrière le garde",
+                "Devant toi se tient un vieux coffre verrouillé. Trouvez le code à 4 chiffres du cadenas en 60 secondes ou le garde vous repérera !",
+                queteCadenat));
+
     }
 
     private void afficherLocalisation() {
@@ -82,10 +89,17 @@ public class Jeu {
                 joueur.deposerObjet(item);
             case "A", "A(FFICHER L'INVENTAIRE ACTUEL)" -> afficherInventaire();
             case "T", "TEST" -> test();
+
             case "C", "COMMUNIQUER" -> {
                 PNJ pnj = zoneCourante.getPNJ();
                 if (pnj != null) {
+
+                    if (zoneCourante.toString().equalsIgnoreCase("Camp Tarsis")){
+                        gui.afficheImage("camp02.png");
+                    }
+                    //On change d'abord l'image avant d'éxecuter l'interaction pour l'énigme du cadenat
                     gui.afficher(pnj.interagir(joueur));
+
                     if (zoneCourante.toString().equalsIgnoreCase("Nouvelle-Dauréa")) {
                         if (joueur.getSac().possedeItem("cristal")) {
                             gui.afficheImage("ville03.png");
@@ -93,10 +107,14 @@ public class Jeu {
                             gui.afficheImage("ville02.png");
                         }
                     }
+
                 } else {
                     gui.afficher("Il n'y a personne à qui parler ici.");
                 }
             }
+
+
+
             case "V", "VENDRE" -> vendre();
             case "X", "VOIR_INDICE" -> voirIndices();
 
