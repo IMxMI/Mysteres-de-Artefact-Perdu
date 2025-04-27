@@ -2,7 +2,7 @@ package org.jeu;
 
 import javax.swing.*;
 import java.time.Instant;
-import java.util.Scanner;
+import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class EnigmeInteractive implements Enigme {
@@ -67,7 +67,7 @@ public class EnigmeInteractive implements Enigme {
             String s = JOptionPane.showInputDialog("Trouvez le code :");
             // Si le joueur annule ou ferme la fenêtre, on quitte
             if (s == null) return;
-            // On calcule le temps écoulé et si il dépasse 60, le joueur a perdu
+            // On calcule le temps écoulé et s'il dépasse 60, le joueur a perdu
             long secondes = Instant.now().getEpochSecond() - debut.getEpochSecond();
             if (secondes > 60) {
                 JOptionPane.showMessageDialog(null, "Temps écoulé, le garde vous a attrapé !");
