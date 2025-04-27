@@ -47,6 +47,10 @@ public class Zone
         return pnj;
     }
 
+    public void removePnj() {
+        this.pnj = null;
+    }
+
     public void ajouterPNJ(PNJ pnjNouvelleDaurea) {
         this.pnj = pnjNouvelleDaurea;
     }

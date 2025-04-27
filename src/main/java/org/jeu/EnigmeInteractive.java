@@ -17,6 +17,13 @@ public class EnigmeInteractive implements Enigme {
         this.type = type;
     }
 
+    private Jeu jeu;
+
+    public EnigmeInteractive(Type type, Jeu jeu) {
+        this.type = type;
+        this.jeu = jeu;
+    }
+
     @Override
     public boolean estResolu() {
         return resolu;
@@ -89,6 +96,10 @@ public class EnigmeInteractive implements Enigme {
     }
 
     private void Mastermind() {
+        if(jeu.getJoueur().getFragments().size() != 4){
+            jeu.getGUI().afficher("Vous n'avez pas assez de fragments pour activer l'odinateur\nvous avez causer la fin du monde.");
+            return;
+        }
         final int MAX_ESSAIS = 5;
         final int CODE_LENGTH = 4;
         String[] couleurs = {"Violet", "Vert", "Rouge", "Bleu"};
@@ -99,6 +110,7 @@ public class EnigmeInteractive implements Enigme {
         JOptionPane.showMessageDialog(null, "Bienvenue dans le terminal. Trouvez le code secret de 4 couleurs (Violet, Vert, Rouge, Bleu) en " + MAX_ESSAIS + " essais.");
 
         for (int essai = 1; essai <= MAX_ESSAIS; essai++) {
+            System.out.println(Arrays.toString(code));
             String proposition = JOptionPane.showInputDialog("Essai " + essai + "/" + MAX_ESSAIS + " : Entrez une combinaison de 4 couleurs séparées par des espaces (ex: Rouge Bleu Vert Violet).");
             if (proposition == null) return; // Si le joueur annule
 
@@ -112,6 +124,11 @@ public class EnigmeInteractive implements Enigme {
             if (java.util.Arrays.equals(propositionCouleurs, code)) {
                 JOptionPane.showMessageDialog(null, "Félicitations ! Vous avez trouvé le code : " + String.join(" ", code) + "\n Ordinateur déverrouillé, activation des processus.");
                 resolu = true;
+
+                // Afficher une image via GUI
+                if (jeu != null && jeu.getGUI() != null) {
+                    jeu.getGUI().afficheImage("labo02.png"); // Chemin de l'image
+                }
                 return;
             }
 

@@ -60,7 +60,7 @@ public class Jeu {
         Quete queteGrotte = new Quete("Implorer l'artefact", "La réponse du joueur doit contenir le nom de l'artefact", "reponse_correcte", "QUATRIEME", enigmeGrotte);
         zones[4].ajouterPNJ(new PNJ("Une inscription sur le mur", "", queteGrotte));
 
-        EnigmeInteractive enigmeMastermind = new EnigmeInteractive(EnigmeInteractive.Type.MASTERMIND);
+        EnigmeInteractive enigmeMastermind = new EnigmeInteractive(EnigmeInteractive.Type.MASTERMIND, this);
         Quete queteMastermind = new Quete(
                 "Activer le terminal",
                 "Trouvez le code secret pour activer le terminal.",
@@ -116,8 +116,9 @@ public class Jeu {
                     //On change d'abord l'image avant d'éxecuter l'interaction pour l'énigme du cadenas
                     gui.afficher(pnj.interagir(joueur));
 
-                    if (zoneCourante.toString().equalsIgnoreCase("La Grotte")){
+                    if (zoneCourante.toString().equalsIgnoreCase("La Grotte") && pnj.getQuete().isTerminee()) {
                         gui.afficheImage("grotte03.png");
+                        zones[4].removePnj();
                     }
 
                     if (zoneCourante.toString().equalsIgnoreCase("Nouvelle-Dauréa")) {
@@ -287,6 +288,14 @@ public class Jeu {
             }
         }
         return zones[0];
+    }
+
+    public GUI getGUI() {
+        return gui;
+    }
+
+    public Joueur getJoueur() {
+        return joueur;
     }
 
 }
