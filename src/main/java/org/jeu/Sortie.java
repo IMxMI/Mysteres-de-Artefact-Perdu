@@ -1,4 +1,4 @@
 package org.jeu;
 public enum Sortie {
-	NORD,SUD,EST,OUEST,EXIT;
+	NORD,SUD,EST,OUEST;
 }
