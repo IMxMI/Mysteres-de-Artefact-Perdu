@@ -30,8 +30,8 @@ public class EnigmeInteractive implements Enigme {
         }
     }
 
-    private void SuperSimon() {
-        String symboles = "@#$%&*";
+    private boolean SuperSimon() {
+        String symboles = "*"; //@#$%&*
         String sequence = "";
 
         for (int i = 0; i < 6; i++) {
@@ -47,8 +47,11 @@ public class EnigmeInteractive implements Enigme {
 
         if (reponse != null && reponse.replaceAll("\\s+", "").equals(solution)) {
             JOptionPane.showMessageDialog(null, "Bravo !");
+            resolu = true; // Mise à jour de la variable resolu
+            return true;
         } else {
             JOptionPane.showMessageDialog(null, "Raté ! C'était : " + solution);
+            return false;
         }
     }
 

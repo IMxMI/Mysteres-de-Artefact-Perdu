@@ -13,7 +13,16 @@ public class PNJ {
 
     public String interagir(Joueur joueur) {
         if (quete != null && !quete.isTerminee()) {
-            if (joueur.getSac().possedeItem(quete.getCondition())) {
+            if (quete.getEnigme() != null) {
+                quete.getEnigme().poser();
+                if (quete.getEnigme().estResolu()) {
+                    quete.terminer();
+                    joueur.getFragments().add(Fragments.valueOf(quete.getRecompense()));
+                    return "Bravo ! Vous avez résolu l'énigme. Voici votre récompense : " + quete.getRecompense();
+                } else {
+                    return "Vous n'avez pas encore résolu l'énigme.";
+                }
+            } else if (joueur.getSac().possedeItem(quete.getCondition())) {
                 quete.terminer();
                 joueur.getFragments().add(Fragments.valueOf(quete.getRecompense()));
                 return "Merci pour " + quete.getCondition() + "! Voici votre récompense : " + quete.getRecompense();
@@ -26,5 +35,9 @@ public class PNJ {
 
     public String getNom() {
         return nom;
+    }
+
+    public Quete getQuete() {
+        return quete;
     }
 }

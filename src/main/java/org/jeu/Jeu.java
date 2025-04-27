@@ -45,7 +45,8 @@ public class Jeu {
         PNJ pnjNouvelleDaurea = new PNJ("Ancien", "Bonjour, aventurier, j'ai entendu parler que tu rechercher les fragments d'une relique du passé. Je pense pouvoir t'aider !", queteCristal);
         zones[0].ajouterPNJ(pnjNouvelleDaurea);
 
-        Quete queteEnigme = new Quete("Résoudre l'énigme", "Répondez à l'énigme du PNJ.", "reponse_correcte", "DEUXIEME");
+        EnigmeInteractive enigme = new EnigmeInteractive(EnigmeInteractive.Type.SIMON);
+        Quete queteEnigme = new Quete("Résoudre l'énigme", "Répondez à l'énigme du PNJ.", "reponse_correcte", "DEUXIEME", enigme);
         PNJ pnjClairiere = new PNJ("Sage", "Je vais vous poser une énigme...", queteEnigme);
         zones[1].ajouterPNJ(pnjClairiere);
 

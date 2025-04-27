@@ -3,39 +3,64 @@ package org.jeu;
 public class Quete {
     private String nom;
     private String description;
-    private boolean terminee;
-    private String condition; // Par exemple, "trouver_cristal"
-    private String recompense; // Par exemple, "fragment"
+    private String condition;
+    private String recompense;
+    private EnigmeInteractive enigme;
+    private boolean terminee = false;
 
     public Quete(String nom, String description, String condition, String recompense) {
         this.nom = nom;
         this.description = description;
         this.condition = condition;
         this.recompense = recompense;
-        this.terminee = false;
     }
 
-    public String getNom() {
-        return nom;
+    public Quete(String nom, String description, String condition, String recompense, EnigmeInteractive enigme) {
+        this.nom = nom;
+        this.description = description;
+        this.condition = condition;
+        this.recompense = recompense;
+        this.enigme = enigme;
     }
 
-    public String getDescription() {
-        return description;
+    public boolean resoudreEnigme(Joueur joueur) {
+        if (enigme != null && enigme.estResolu()) {
+            terminee = true;
+            joueur.getFragments().add(Fragments.valueOf(recompense));
+            return true;
+        }
+        return false;
+    }
+
+    public String interagirAvecEnigme(Joueur joueur) {
+        if (enigme != null) {
+            enigme.poser();
+            if (resoudreEnigme(joueur)) {
+                return "Bravo ! Vous avez résolu l'énigme. Voici votre récompense : " + recompense;
+            } else {
+                return "Vous n'avez pas encore résolu l'énigme.";
+            }
+        }
+        return "Aucune énigme associée à cette quête.";
     }
 
     public boolean isTerminee() {
         return terminee;
     }
 
+    public EnigmeInteractive getEnigme() {
+        return enigme;
+    }
+
     public void terminer() {
         this.terminee = true;
     }
 
-    public String getCondition() {
-        return condition;
-    }
-
     public String getRecompense() {
         return recompense;
+    }
+
+    public String getCondition() {
+        return condition;
     }
 }
