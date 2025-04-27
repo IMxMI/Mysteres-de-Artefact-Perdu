@@ -1,17 +1,25 @@
 package org.jeu;
-
+import java.io.Console;
 import java.util.Scanner;
 
 public class Main {
-
     public static void main(String[] args) {
-		Jeu jeu = new Jeu();
+        Jeu jeu = new Jeu();
 
-        Scanner sc = new Scanner(System.in);
-        System.out.print("Nom d'utilisateur : ");
-        String user = sc.nextLine();
-        System.out.print("Mot de passe      : ");
-        String pass = sc.nextLine();
+        Console console = System.console();
+        String user, pass;
+
+        if (console == null) {
+            Scanner sc = new Scanner(System.in);
+            System.out.print("Nom d'utilisateur : ");
+            user = sc.nextLine();
+            System.out.print("Mot de passe      : ");
+            pass = sc.nextLine();
+        } else {
+            user = console.readLine("Nom d'utilisateur : ");
+            char[] pwdArray = console.readPassword("Mot de passe      : ");
+            pass = new String(pwdArray);
+        }
 
         Compte compte = SauvegardeManager.login(user, pass);
         if (compte == null) {
@@ -21,6 +29,6 @@ public class Main {
 
         jeu.connecterJoueur(compte);
         GUI gui = new GUI(jeu);
-        jeu.setGUI(gui);                     
+        jeu.setGUI(gui);
     }
 }
