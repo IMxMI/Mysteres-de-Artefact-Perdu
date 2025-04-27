@@ -7,7 +7,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class EnigmeInteractive implements Enigme {
     public enum Type {
-        SIMON, JUSTE_PRIX, MASTERMIND
+        SIMON, JUSTE_PRIX, MASTERMIND, PILLIERS_ORDRE
     }
 
     private final Type type;
@@ -35,6 +35,7 @@ public class EnigmeInteractive implements Enigme {
             case SIMON -> SuperSimon();
             case JUSTE_PRIX -> JustePrix();
             case MASTERMIND -> Mastermind();
+            case PILLIERS_ORDRE -> PilliersOrdre();
         }
     }
 
@@ -119,13 +120,10 @@ public class EnigmeInteractive implements Enigme {
                 JOptionPane.showMessageDialog(null, "Veuillez entrer exactement 4 couleurs.");
                 continue;
             }
-
-            // Vérification si le joueur a trouvé le code
             if (java.util.Arrays.equals(propositionCouleurs, code)) {
                 JOptionPane.showMessageDialog(null, "Félicitations ! Vous avez trouvé le code : " + String.join(" ", code) + "\n Ordinateur déverrouillé, activation des processus.");
                 resolu = true;
 
-                // Afficher une image via GUI
                 if (jeu != null && jeu.getGUI() != null) {
                     jeu.getGUI().afficheImage("labo02.png"); // Chemin de l'image
                 }
@@ -164,6 +162,61 @@ public class EnigmeInteractive implements Enigme {
 
         JOptionPane.showMessageDialog(null, "Vous avez échoué ! Le code était : " + String.join(" ", code));
         System.exit(0); // Fin du jeu
+    }
+
+    private void PilliersOrdre() {
+        if (jeu == null || jeu.getJoueur() == null || jeu.getJoueur().getSac() == null) {
+            JOptionPane.showMessageDialog(null, "Erreur : Le jeu ou le joueur n'est pas correctement initialisé.");
+            return;
+        }
+
+        String[] inscriptions = {
+                "Je suis l'aube d'un cycle éternel.",
+                "Je suis le lien entre le début et la fin.",
+                "Je suis l'ombre qui clôt le jour."
+        };
+
+        List<Integer> chiffres = new ArrayList<>(List.of(1, 2, 3));
+        Collections.shuffle(chiffres);
+
+        // Mélanger les inscriptions selon l'ordre des chiffres
+        String[] inscriptionsMelangees = new String[inscriptions.length];
+        for (int i = 0; i < chiffres.size(); i++) {
+            inscriptionsMelangees[i] = inscriptions[chiffres.get(i) - 1];
+        }
+
+        String combinaisonCorrecte = chiffres.stream().map(String::valueOf).reduce("", String::concat);
+
+        StringBuilder message = new StringBuilder("Les piliers portent les inscriptions suivantes :\n");
+        for (int i = 0; i < inscriptionsMelangees.length; i++) {
+            message.append("Pilier ").append(i + 1).append(": ").append(inscriptionsMelangees[i]).append("\n");
+        }
+        message.append("\nEntrez l'ordre correct des piliers (par exemple, 123) :");
+
+        while (!resolu) {
+            String reponse = JOptionPane.showInputDialog(message.toString());
+            if (reponse == null) return;
+
+            if (reponse.equals(combinaisonCorrecte)) {
+                JOptionPane.showMessageDialog(null, "Félicitations ! Vous avez trouvé la bonne combinaison.");
+                resolu = true;
+
+                // Ajouter un cristal au sac du joueur
+                jeu.getJoueur().getSac().ajouterItem(new Item("cristal", "Un cristal scintillant."));
+
+                // Afficher une image si le GUI est disponible
+                if (jeu.getGUI() != null) {
+                    jeu.getGUI().afficheImage("desert02.png");
+                }
+
+                // Retirer le PNJ de la zone
+                if (jeu.zones[2] != null) {
+                    jeu.zones[2].removePnj();
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Mauvaise combinaison. Réessayez.");
+            }
+        }
     }
 
 

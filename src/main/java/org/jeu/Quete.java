@@ -37,8 +37,10 @@ public class Quete {
     public String interagirAvecEnigme(Joueur joueur) {
         if (enigme != null) {
             enigme.poser();
-            if (resoudreEnigme(joueur)) {
-                return "Bravo ! Vous avez résolu l'énigme. Voici votre récompense : " + recompense;
+            if (enigme.estResolu()) {
+                if (resoudreEnigme(joueur)) {
+                    return "Bravo ! Vous avez résolu l'énigme. Voici votre récompense : " + recompense;
+                }
             } else {
                 return "Vous n'avez pas encore résolu l'énigme.";
             }

@@ -23,8 +23,6 @@ public class Jeu {
         zones[4] = new Zone("La Grotte", "grotte01.png" );
         zones[5] = new Zone("Laboratoire Abandonnée", "labo01.png" );
 
-
-
         zones[0].ajouteSortie(Sortie.NORD, zones[1]);
         zones[0].ajouteSortie(Sortie.EST, zones[2]);
 
@@ -50,6 +48,10 @@ public class Jeu {
         PNJ pnjClairiere = new PNJ("Sage", "Je vais vous poser une énigme...", queteEnigme);
         zones[1].ajouterPNJ(pnjClairiere);
 
+        EnigmeInteractive enigmePilliers = new EnigmeInteractive(EnigmeInteractive.Type.PILLIERS_ORDRE, this);
+        Quete quetePilliers = new Quete("Résoudre l'énigme des piliers", "Trouvez l'ordre correct des piliers pour obtenir le cristal.", "reponse_correcte", "", enigmePilliers);
+        PNJ pnjDesert = new PNJ("Piliers", "Seul celui qui résout l'énigme des piliers peut obtenir le cristal.", quetePilliers);
+        zones[2].ajouterPNJ(pnjDesert);
 
         EnigmeInteractive enigmeCadenas = new EnigmeInteractive(EnigmeInteractive.Type.JUSTE_PRIX);
         Quete queteCadenas = new Quete("Résoudre l'énigme", "Trouver un code à 4 chiffres en 60 secondes", "reponse_correcte", "TROISIEME", enigmeCadenas);
@@ -65,7 +67,7 @@ public class Jeu {
                 "Activer le terminal",
                 "Trouvez le code secret pour activer le terminal.",
                 "code_terminal",
-                "",
+                "cristal",
                 enigmeMastermind
         );
         zones[5].ajouterPNJ(new PNJ(
@@ -113,7 +115,6 @@ public class Jeu {
                     if (zoneCourante.toString().equalsIgnoreCase("Camp Tarsis")){
                         gui.afficheImage("camp02.png");
                     }
-                    //On change d'abord l'image avant d'éxecuter l'interaction pour l'énigme du cadenas
                     gui.afficher(pnj.interagir(joueur));
 
                     if (zoneCourante.toString().equalsIgnoreCase("La Grotte") && pnj.getQuete().isTerminee()) {
