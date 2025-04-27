@@ -1,228 +1,148 @@
 package org.jeu;
-
-import java.util.stream.Collectors;
-
 public class Jeu {
-    private Zone zoneCourante;
+	
+    private GUI gui; 
+	private Zone zoneCourante;
     private Zone zonePrecedente = null;
     private Joueur joueur;
-    Zone[] zones = new Zone[6];
-
+    private Item item;
+  
     public Jeu() {
         creerCarte();
+        gui = null;
     }
 
+    public void setGUI( GUI g) { gui = g; afficherMessageDeBienvenue(); }
+    Zone [] zones = new Zone [6];
     private void creerCarte() {
-        zones[0] = new Zone("Nouvelle-Dauréa", "NouvelleDaurea.png");
-        zones[1] = new Zone("La Clairière des Souvenirs", "ClairiereSouvenir.png");
-        zones[2] = new Zone("La Zone Désertique", "ZoneDesertique.png");
-        zones[3] = new Zone("Camp Tarsis", "CampTarsis.png");
-        zones[4] = new Zone("La Grotte", "Grotte.png");
-        zones[5] = new Zone("Laboratoire Abandonné", "laboratoire.png");
-
-        Item carte = new Item("Carte", "Permet de visualiser la carte du monde.");
-        Item cleVegetale = new Item("Clé Végétale", "Une clé mystique aux motifs végétaux, peut-être pour un mécanisme.");
-        Item eauBenite = new Item("Eau Bénite", "Dissout les ronces magiques dans les forêts.");
-        Item corde = new Item("Corde", "Utile pour descendre dans des fosses ou grimper.");
-        Item eclatCristal = new Item("Éclat de Cristal", "Un cristal précieux échangeable contre un fragment.");
-        Item torche = new Item("Torche", "Illumine les zones sombres comme les grottes.");
-        Item potionTemps = new Item("Potion de Temps", "Ralentit le temps pour prolonger les délais.");
-
-        zones[0].addItem(carte);
-        zones[0].addItem(cleVegetale);
-        zones[0].addItem(eauBenite);
-        zones[1].addItem(corde);
-        zones[2].addItem(eclatCristal);
-        zones[3].addItem(torche);
-        zones[3].addItem(potionTemps);
+        
+        zones[0] = new Zone("Nouvelle-Dauréa", "NouvelleDaurea.png" );
+        zones[1] = new Zone("La Clairière des Souvenirs", "ClairiereSouvenir.png" );
+        zones[2] = new Zone("La Zone Désertique", "ZoneDesertique.png" );
+        zones[3] = new Zone("Camp Tarsis", "CampTarsis.png" );
+        zones[4] = new Zone("La Grotte", "Grotte.png" );
+        zones[5] = new Zone("Laboratoire Abandonnée", "laboratoire.png" );
 
         zones[0].ajouteSortie(Sortie.NORD, zones[1]);
         zones[0].ajouteSortie(Sortie.EST, zones[2]);
+
         zones[1].ajouteSortie(Sortie.SUD, zones[0]);
         zones[1].ajouteSortie(Sortie.EST, zones[2]);
+
         zones[2].ajouteSortie(Sortie.OUEST, zones[1]);
         zones[2].ajouteSortie(Sortie.SUD, zones[0]);
         zones[2].ajouteSortie(Sortie.EST, zones[3]);
+
         zones[3].ajouteSortie(Sortie.OUEST, zones[2]);
         zones[3].ajouteSortie(Sortie.SUD, zones[4]);
-        zones[4].ajouteSortie(Sortie.EST, zones[5]);
 
+        zones[4].ajouteSortie(Sortie.EST, zones[5]);
         zoneCourante = zones[0];
+
     }
 
     private void afficherLocalisation() {
-        System.out.println(zoneCourante.descriptionLongue());
-        System.out.println();
+            gui.afficher( zoneCourante.descriptionLongue());
+            gui.afficher();
     }
 
     private void afficherMessageDeBienvenue() {
-        System.out.println("Bienvenue !");
-        System.out.println();
-        System.out.println("Tapez '?' pour obtenir de l'aide.");
-        System.out.println();
+    	gui.afficher("Bienvenue !");
+    	gui.afficher();
+        gui.afficher("Tapez '?' pour obtenir de l'aide.");
+        gui.afficher();
         afficherLocalisation();
-        System.out.println("Affichage de l'image : " + zoneCourante.nomImage());
+        gui.afficheImage(zoneCourante.nomImage());
     }
-
+    
     public void traiterCommande(String commandeLue) {
-        System.out.println("> " + commandeLue);
-        String[] parts = commandeLue.split(" ", 2);
-        String commande = parts[0].toUpperCase();
+    	gui.afficher( "> "+ commandeLue + "\n");
+        switch (commandeLue.toUpperCase()) {
+            case "N", "NORD" -> allerEn("NORD");
+            case "S", "SUD" -> allerEn("SUD");
+            case "E", "EST" -> allerEn("EST");
+            case "O", "OUEST" -> allerEn("OUEST");
+            case "H", "HAUT" -> allerEn("HAUT");
+            case "B", "BAS" -> allerEn("BAS");
+            case "R", "REVENIR" -> revenir();
+            case "P", "PRENDRE" -> 
+                joueur.prendreItem(item);
+            case "D", "DEPOSER" -> 
+                joueur.deposerObjet(item);
+            case "A", "A(FFICHER L'INVENTAIRE ACTUEL)" -> afficherInventaire();
+            case "T", "TEST" -> test();
+            case "C", "COMMUNIQUER" -> joueur.communiquerAvecPNJ();
 
-        switch (commande) {
-            case "N":
-            case "NORD":
-                allerEn("NORD");
-                break;
-            case "S":
-            case "SUD":
-                allerEn("SUD");
-                break;
-            case "E":
-            case "EST":
-                allerEn("EST");
-                break;
-            case "O":
-            case "OUEST":
-                allerEn("OUEST");
-                break;
-            case "H":
-            case "HAUT":
-                allerEn("HAUT");
-                break;
-            case "B":
-            case "BAS":
-                allerEn("BAS");
-                break;
-            case "R":
-            case "REVENIR":
-                revenir();
-                break;
-            case "P":
-            case "PRENDRE":
-                if (parts.length < 2) {
-                    System.out.println("Prendre quoi ? Exemple : P Torche");
-                } else {
-                    Item itemToTake = zoneCourante.getItems().stream()
-                            .filter(i -> i.getNom().equalsIgnoreCase(parts[1]))
-                            .findFirst()
-                            .orElse(null);
-                    joueur.prendreItem(itemToTake);
-                }
-                break;
-            case "D":
-            case "DEPOSER":
-                if (parts.length < 2) {
-                    System.out.println("Déposer quoi ? Exemple : D Torche");
-                } else {
-                    Item itemToDrop = joueur.getSac().getItems().stream()
-                            .filter(i -> i.getNom().equalsIgnoreCase(parts[1]))
-                            .findFirst()
-                            .orElse(null);
-                    if (itemToDrop != null) {
-                        joueur.deposerItem(itemToDrop);
-                    } else {
-                        System.out.println("Vous ne possédez pas cet objet.");
-                    }
-                }
-                break;
-            case "A":
-            case "A(FFICHER L'INVENTAIRE ACTUEL)":
-                afficherInventaire();
-                break;
-            case "T":
-            case "TEST":
-                test();
-                break;
-            case "C":
-            case "COMMUNIQUER":
-                joueur.communiquerAvecPNJ();
-                break;
-            case "V":
-            case "VENDRE":
-                vendre();
-                break;
-            case "X":
-            case "VOIR_INDICE":
-                voirIndices();
-                break;
-            case "Z":
-            case "SAUVEGARDER":
-                joueur.sauvegarderJeu();
-                break;
-            case "M":
-            case "AFFICHER":
-                afficherCarte();
-                break;
-            case "U":
-            case "UTILISER":
-                if (parts.length < 2) {
-                    System.out.println("Utiliser quoi ? Exemple : U Torche");
-                } else {
-                    utiliserItem(parts[1]);
-                }
-                break;
-            case "?":
-            case "AIDE":
-                afficherAide();
-                break;
-            case "Q":
-            case "QUITTER":
-                terminer();
-                break;
-            default:
-                System.out.println("Commande inconnue. Tapez \"?\" pour la liste des commandes.");
+            case "V", "VENDRE" -> vendre();
+            case "X", "VOIR_INDICE" -> voirIndices();
+
+            case "Z", "SAUVEGARDER" -> joueur.sauvegarderJeu();
+            case "M", "AFFICHER" -> afficherCarte();
+
+            case "?", "AIDE" -> afficherAide();
+            case "Q", "QUITTER" -> terminer();
+
+            default -> gui.afficher("Commande inconnue. Tapez \"?\" pour la liste des commandes.");
         }
-    }
+        // Déplacements
+            }
 
     private void afficherAide() {
-        System.out.println("Etes-vous perdu ?");
-        System.out.println();
-        System.out.println("Les commandes autorisées sont :");
-        System.out.println();
-        System.out.println(Commande.toutesLesDescriptions());
-        System.out.println();
+        gui.afficher("Etes-vous perdu ?");
+        gui.afficher();
+        gui.afficher("Les commandes autorisées sont :");
+        gui.afficher();
+        gui.afficher(Commande.toutesLesDescriptions().toString());
+        gui.afficher();
     }
 
+
     private void allerEn(String direction) {
+
         Zone nouvelle = zoneCourante.obtientSortie(direction);
         if (nouvelle == null) {
-            System.out.println("Pas de sortie " + direction);
+            gui.afficher("Pas de sortie " + direction + "\n");
             return;
         }
+
         zonePrecedente = zoneCourante;
-        zoneCourante = nouvelle;
+        zoneCourante   = nouvelle;
+
         if (joueur != null) {
             joueur.setZoneActuelle(zoneCourante);
         }
-        System.out.println(zoneCourante.descriptionLongue());
-        System.out.println();
-        System.out.println("Affichage de l'image : " + zoneCourante.nomImage());
+
+        gui.afficher(zoneCourante.descriptionLongue());
+        gui.afficher();
+        gui.afficheImage(zoneCourante.nomImage());
     }
+
+
 
     private void terminer() {
-        System.out.println("Au revoir...");
-        // In a console game, exit the program
-        System.exit(0);
+    	gui.afficher( "Au revoir...");
+    	gui.enable( false);
     }
 
+    // Jeu.java
     public Zone getZoneDepart() {
         return zones[0];
     }
 
     private void revenir() {
         if (zonePrecedente == null) {
-            System.out.println("Vous n’avez aucun chemin à rebrousser.");
+            gui.afficher("Vous n’avez aucun chemin à rebrousser.\n");
             return;
         }
         Zone tmp = zoneCourante;
         zoneCourante = zonePrecedente;
         zonePrecedente = tmp;
         if (joueur != null) joueur.setZoneActuelle(zoneCourante);
-        System.out.println("Vous faites demi-tour…");
-        System.out.println(zoneCourante.descriptionLongue());
-        System.out.println();
-        System.out.println("Affichage de l'image : " + zoneCourante.nomImage());
+
+        gui.afficher("Vous faites demi‑tour…\n");
+        gui.afficher(zoneCourante.descriptionLongue());
+        gui.afficher();
+        gui.afficheImage(zoneCourante.nomImage());
     }
 
     private void test() {
@@ -230,17 +150,20 @@ public class Jeu {
     }
 
     private void vendre() {
-        final String ECLAT = "Éclat de Cristal";
+        final String ECLAT = "Éclat de cristal";
         if (!zoneCourante.toString().equalsIgnoreCase("Nouvelle-Dauréa")) {
-            System.out.println("Vous ne pouvez vendre qu’au comptoir de Nouvelle-Dauréa.");
+            gui.afficher("Vous ne pouvez vendre qu’au comptoir de Nouvelle‑Dauréa.\n");
             return;
         }
         if (!joueur.getSac().listeNoms().contains(ECLAT)) {
-            System.out.println("Vous n’avez pas l’" + ECLAT + " à vendre.");
+            gui.afficher("Vous n’avez pas l’" + ECLAT + " à vendre.\n");
             return;
         }
+
+        /* on enlève l’objet et on crédite le fragment 1 ---------------- */
         joueur.getSac().enleverItem(
-                joueur.getSac().getItems().stream()
+                joueur.getSac().getItems()
+                        .stream()
                         .filter(i -> i.getNom().equals(ECLAT))
                         .findFirst()
                         .orElse(null)
@@ -248,49 +171,44 @@ public class Jeu {
         if (!joueur.getFragments().contains(Fragments.PREMIER)) {
             joueur.getFragments().add(Fragments.PREMIER);
         }
-        System.out.println("Vous vendez l’éclat : le premier fragment vous est remis !");
+
+        gui.afficher("Vous vendez l’éclat : le premier fragment vous est remis !\n");
     }
 
     private void voirIndices() {
         if (joueur.getIndices().isEmpty()) {
-            System.out.println("Vous n’avez recueilli aucun indice pour l’instant.");
+            gui.afficher("Vous n’avez recueilli aucun indice pour l’instant.\n");
         } else {
-            System.out.println("Indices collectés : " + joueur.getIndices());
+            gui.afficher("Indices collectés : " + joueur.getIndices() + "\n");
         }
     }
 
     private void afficherInventaire() {
-        System.out.println("Inventaire («" + joueur.getSac().getItems().size() + "/5») : " + joueur.getSac().listeNoms());
+        gui.afficher("Inventaire («" + joueur.getSac().getItems().size()
+                + "/5») : " + joueur.getSac().listeNoms() + "\n");
     }
 
     private void afficherCarte() {
-        System.out.println("Affichage de l'image : carte.png");
-        System.out.println();
+        gui.afficheImage("carte.png");          // située dans resources/images/
+        gui.afficher();                         // saut de ligne seulement
     }
 
     public void connecterJoueur(Compte compte) {
+
         Zone pos = trouverZone(compte.getZoneCourante());
+
         Sac sac = new Sac();
         for (String nomItem : compte.getInventaire()) {
-            String description = switch (nomItem) {
-                case "Carte" -> "Permet de visualiser la carte du monde.";
-                case "Clé Végétale" -> "Une clé mystique aux motifs végétaux, peut-être pour un mécanisme.";
-                case "Eau Bénite" -> "Dissout les ronces magiques dans les forêts.";
-                case "Corde" -> "Utile pour descendre dans des fosses ou grimper.";
-                case "Éclat de Cristal" -> "Un cristal précieux échangeable contre un fragment.";
-                case "Torche" -> "Illumine les zones sombres comme les grottes.";
-                case "Potion de Temps" -> "Ralentit le temps pour prolonger les délais.";
-                default -> "Objet inconnu.";
-            };
-            sac.ajouterItem(new Item(nomItem, description));
+            sac.ajouterItem(new Item(nomItem, ""));
         }
+
         Joueur j = new Joueur(sac, pos, compte);
         for (String nomFrag : compte.getFragments()) {
             j.getFragments().add(Fragments.valueOf(nomFrag));
         }
+
         zoneCourante = pos;
-        joueur = j;
-        afficherMessageDeBienvenue();
+        joueur       = j;
     }
 
     public Zone trouverZone(String nomZone) {
@@ -305,61 +223,4 @@ public class Jeu {
         return zones[0];
     }
 
-    private void utiliserItem(String itemName) {
-        Item item = joueur.getSac().getItems().stream()
-                .filter(i -> i.getNom().equalsIgnoreCase(itemName))
-                .findFirst()
-                .orElse(null);
-        if (item == null) {
-            System.out.println("Vous ne possédez pas cet objet.");
-            return;
-        }
-        String zoneName = zoneCourante.toString();
-        switch (item.getNom()) {
-            case "Eau Bénite":
-                if (zoneName.equals("La Clairière des Souvenirs")) {
-                    System.out.println("Vous utilisez l'Eau Bénite pour dissoudre les ronces. Le chemin est dégagé !");
-                    joueur.getSac().enleverItem(item);
-                } else {
-                    System.out.println("L'Eau Bénite n'a aucun effet ici.");
-                }
-                break;
-            case "Torche":
-                if (zoneName.equals("La Grotte")) {
-                    System.out.println("Vous allumez la Torche, révélant le labyrinthe.");
-                } else {
-                    System.out.println("La Torche n'est pas nécessaire ici.");
-                }
-                break;
-            case "Potion de Temps":
-                if (zoneName.equals("La Grotte") || zoneName.equals("Camp Tarsis")) {
-                    System.out.println("Vous buvez la Potion de Temps, ralentissant le temps.");
-                    joueur.getSac().enleverItem(item);
-                } else {
-                    System.out.println("La Potion de Temps n'a aucun effet ici.");
-                }
-                break;
-            case "Carte":
-                afficherCarte();
-                break;
-            case "Clé Végétale":
-                if (zoneName.equals("Laboratoire Abandonné")) {
-                    System.out.println("Vous utilisez la Clé Végétale pour activer un mécanisme.");
-                    joueur.getSac().enleverItem(item);
-                } else {
-                    System.out.println("La Clé Végétale n'a aucun effet ici.");
-                }
-                break;
-            case "Corde":
-                if (zoneName.equals("Camp Tarsis")) {
-                    System.out.println("Vous utilisez la Corde pour descendre dans la fosse.");
-                    joueur.getSac().enleverItem(item);
-                } else {
-                    System.out.println("La Corde n'a aucun effet ici.");
-                }
-                break;
-            default:
-                System.out.println("Cet objet ne peut pas être utilisé.");
-        }
-    }
 }

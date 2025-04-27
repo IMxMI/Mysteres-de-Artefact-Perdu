@@ -1,9 +1,10 @@
 package org.jeu;
 
+
 import java.util.ArrayList;
 import java.util.List;
-
 public class Joueur {
+
     private Sac sac;
     private Zone zoneActuelle;
     private Compte compte;
@@ -32,9 +33,7 @@ public class Joueur {
         this.zoneActuelle = zoneActuelle;
     }
 
-    public List<String> getIndices() {
-        return indices;
-    }
+    public List<String> getIndices()   {   return indices;   }
 
     public Compte getCompte() {
         return compte;
@@ -49,29 +48,15 @@ public class Joueur {
     }
 
     public void prendreItem(Item item) {
-        if (item == null || !zoneActuelle.containsItem(item)) {
-            System.out.println("Cet objet n’est pas ici.");
-            return;
-        }
-        if (!sac.ajouterItem(item)) {
-            System.out.println("Le sac est plein. Voulez-vous déposer un objet ? (Tapez D <nom>)");
-            return;
-        }
-        zoneActuelle.removeItem(item);
-        System.out.println("Vous prenez : " + item.getNom());
+        sac.ajouterItem(item);
     }
 
     public void deposerItem(Item item) {
-        if (item == null || !sac.contient(item)) {
-            System.out.println("Vous ne possédez pas cet objet.");
-            return;
-        }
         sac.enleverItem(item);
-        zoneActuelle.addItem(item);
-        System.out.println("Vous déposez : " + item.getNom());
     }
-
+    
     public void communiquerAvecPNJ() {
+        // TODO : implémenter la logique de communication selon le scénario
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
@@ -79,8 +64,12 @@ public class Joueur {
         return fragments.contains(f);
     }
 
+    public void deposerObjet(Item item) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
     public void sauvegarderJeu() {
         SauvegardeManager.sauvegarder(this);
-        System.out.println("Partie sauvegardée !");
+        System.out.println("Partie sauvegardée !\n");
     }
+
 }
