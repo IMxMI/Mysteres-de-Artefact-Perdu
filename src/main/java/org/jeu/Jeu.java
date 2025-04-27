@@ -1,4 +1,6 @@
 package org.jeu;
+
+import javax.swing.JOptionPane;
 public class Jeu {
 	
     private GUI gui; 
@@ -13,7 +15,7 @@ public class Jeu {
     }
 
     public void setGUI( GUI g) { gui = g; afficherMessageDeBienvenue(); }
-    Zone [] zones = new Zone [7];
+    Zone [] zones = new Zone [8];
     private void creerCarte() {
         
         zones[0] = new Zone("Nouvelle-Dauréa", "ville01.png" );
@@ -23,6 +25,7 @@ public class Jeu {
         zones[4] = new Zone("La Grotte", "grotte01.png" );
         zones[5] = new Zone("Laboratoire Abandonnée", "labo01.png" );
         zones[6] = new Zone("game over", "gameover.png" );
+        zones[7] = new Zone("Introduction", "ville04.png" );
 
         zones[0].ajouteSortie(Sortie.NORD, zones[1]);
         zones[0].ajouteSortie(Sortie.EST, zones[2]);
@@ -38,7 +41,7 @@ public class Jeu {
         zones[3].ajouteSortie(Sortie.SUD, zones[4]);
 
         zones[4].ajouteSortie(Sortie.EST, zones[5]);
-        zoneCourante = zones[0];
+        zoneCourante = zones[7];
 
         Quete queteCristal = new Quete("Trouver le cristal", "Apportez un cristal au PNJ.", "cristal", "PREMIER");
         PNJ pnjNouvelleDaurea = new PNJ("Le Marchand", "Bonjour, aventurier, j'ai entendu parler que tu rechercher les fragments d'une relique du passé. \nJe pense pouvoir t'aider !", queteCristal);
@@ -84,12 +87,44 @@ public class Jeu {
     }
 
     private void afficherMessageDeBienvenue() {
-    	gui.afficher("Bienvenue !");
-    	gui.afficher();
-        gui.afficher("Tapez '?' pour obtenir de l'aide.");
-        gui.afficher();
-        afficherLocalisation();
-        gui.afficheImage(zoneCourante.nomImage());
+        if(zoneCourante.nomImage().equals("ville04.png")) {
+            introduction();
+        }
+        else{
+            gui.afficher("Bienvenue !");
+            gui.afficher();
+            gui.afficher("Tapez '?' pour obtenir de l'aide.");
+            gui.afficher();
+            afficherLocalisation();
+            gui.afficheImage(zoneCourante.nomImage());
+        }
+    }
+
+    private void introduction() {
+        // Afficher l'image d'introduction
+        gui.afficheImage("ville04.png");
+
+        // Afficher le texte d'introduction
+        gui.afficher("Bienvenue dans le jeu ! Vous êtes sur le point de commencer une aventure incroyable.\n");
+        gui.afficher("Souhaitez-vous en savoir plus sur le fonctionnement du jeu ? (Répondez par O/N ou Oui/Non)");
+
+        // Obtenir la réponse de l'utilisateur
+        String reponse = JOptionPane.showInputDialog("Souhaitez-vous en savoir plus ? (O/N)");
+
+        // Vérifier la réponse
+        if (reponse != null) {
+            reponse = reponse.trim().toLowerCase();
+            if (reponse.equals("o") || reponse.equals("oui")) {
+                gui.afficher("Super ! Voici quelques conseils pour bien commencer :\n");
+                gui.afficher("- Explorez les zones pour découvrir des objets et des énigmes.\n");
+                gui.afficher("- Interagissez avec les PNJ pour avancer dans l'histoire.\n");
+                gui.afficher("- Utilisez votre sac pour gérer vos objets.\n");
+            } else if (reponse.equals("n") || reponse.equals("non")) {
+                gui.afficher("Pas de problème ! Vous pouvez commencer directement votre aventure.\n");
+            } else {
+                gui.afficher("Réponse non reconnue. L'aventure commence !\n");
+            }
+        }
     }
     
     public void traiterCommande(String commandeLue) {
@@ -151,10 +186,6 @@ public class Jeu {
             case "?", "AIDE" -> afficherAide();
             case "Q", "QUITTER" -> terminer();
 
-            case "PO" -> {
-                Item item1 = new Item("cristal", "Un cristal scintillant.");
-                joueur.getSac().ajouterItem(item1);
-            }
             default -> gui.afficher("Commande inconnue. Tapez \"?\" pour la liste des commandes.");
         }
         // Déplacements

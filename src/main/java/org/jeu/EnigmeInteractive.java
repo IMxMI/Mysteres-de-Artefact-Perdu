@@ -70,12 +70,12 @@ public class EnigmeInteractive implements Enigme {
     private void JustePrix() {
         final int code = ThreadLocalRandom.current().nextInt(1000, 10000);
         Instant debut = Instant.now();
-        JOptionPane.showMessageDialog(null, "Vous avez 30 secondes pour deviner le code à 4 chiffres avant que le garde ne vous voit.");
+        JOptionPane.showMessageDialog(null, "Vous avez 45 secondes pour deviner le code à 4 chiffres avant que le garde ne vous voit.");
         while (true) {
             String s = JOptionPane.showInputDialog("Trouvez le code :");
             if (s == null) return;
             long secondes = Instant.now().getEpochSecond() - debut.getEpochSecond();
-            if (secondes > 30) {
+            if (secondes > 45) {
                 JOptionPane.showMessageDialog(null, "Temps écoulé, le garde vous a attrapé !");
                 jeu.gameOver();
                 break;
