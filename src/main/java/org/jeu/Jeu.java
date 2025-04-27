@@ -97,7 +97,7 @@ public class Jeu {
                     if (zoneCourante.toString().equalsIgnoreCase("Camp Tarsis")){
                         gui.afficheImage("camp02.png");
                     }
-                    //On change d'abord l'image avant d'éxecuter l'interaction pour l'énigme du cadenat
+                    //On change d'abord l'image avant d'éxecuter l'interaction pour l'énigme du cadenas
                     gui.afficher(pnj.interagir(joueur));
 
                     if (zoneCourante.toString().equalsIgnoreCase("Nouvelle-Dauréa")) {
