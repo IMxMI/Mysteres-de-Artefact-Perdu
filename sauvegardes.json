@@ -1,0 +1,49 @@
+{
+  "fds": {
+    "username": "fds",
+    "password": "vcx",
+    "zoneCourante": "Introduction",
+    "inventaire": [],
+    "fragments": []
+  },
+  "ff": {
+    "username": "ff",
+    "password": "s",
+    "zoneCourante": "Introduction",
+    "inventaire": [],
+    "fragments": []
+  },
+  "bfd": {
+    "username": "bfd",
+    "password": "re",
+    "zoneCourante": "Introduction",
+    "inventaire": [],
+    "fragments": []
+  },
+  "a": {
+    "username": "a",
+    "password": "a",
+    "zoneCourante": "Nouvelle-Dauréa",
+    "inventaire": [
+      "cristal"
+    ],
+    "fragments": [
+      "PREMIER",
+      "PREMIER"
+    ]
+  },
+  "q": {
+    "username": "q",
+    "password": "a",
+    "zoneCourante": "Introduction",
+    "inventaire": [],
+    "fragments": []
+  },
+  "b": {
+    "username": "b",
+    "password": "s",
+    "zoneCourante": "Introduction",
+    "inventaire": [],
+    "fragments": []
+  }
+}

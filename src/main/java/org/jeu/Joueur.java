@@ -3,6 +3,11 @@ package org.jeu;
 
 import java.util.ArrayList;
 import java.util.List;
+/**
+ * Classe représentant un joueur dans le jeu.
+ * Cette classe contient les informations de base d'un joueur, y compris son inventaire,
+ * sa zone actuelle, son compte, ainsi que les fragments et indices qu'il possède.
+ */
 public class Joueur {
 
     private Sac sac;
@@ -11,6 +16,12 @@ public class Joueur {
     private final List<Fragments> fragments = new ArrayList<>();
     private final List<String> indices = new ArrayList<>();
 
+    /**
+     * Constructeur de la classe Joueur.
+     * @param sac
+     * @param zoneActuelle
+     * @param compte
+     */
     public Joueur(Sac sac, Zone zoneActuelle, Compte compte) {
         this.sac = sac;
         this.zoneActuelle = zoneActuelle;

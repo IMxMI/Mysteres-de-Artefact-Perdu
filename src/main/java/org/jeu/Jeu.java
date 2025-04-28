@@ -1,21 +1,36 @@
 package org.jeu;
 
-import javax.swing.JOptionPane;
+/**
+ * Classe principale du jeu.
+ * Cette classe gère la logique du jeu, y compris la création de la carte,
+ */
 public class Jeu {
-	
+
     private GUI gui; 
 	private Zone zoneCourante;
     private Zone zonePrecedente = null;
     private Joueur joueur;
     private Item item;
-  
+
+    /**
+     * Constructeur de la classe Jeu.
+     * Initialise la carte du jeu et la GUI.
+     */
     public Jeu() {
         creerCarte();
         gui = null;
     }
 
+    /**
+     * Définit la GUI du jeu.
+     * @param g La GUI à associer au jeu
+     */
     public void setGUI( GUI g) { gui = g; afficherMessageDeBienvenue(); }
     Zone [] zones = new Zone [9];
+    /**
+     * Crée la carte du jeu.
+     * Initialise les zones, les sorties et les PNJ.
+     */
     private void creerCarte() {
         
         zones[0] = new Zone("Nouvelle-Dauréa", "ville01.png" );
@@ -84,11 +99,17 @@ public class Jeu {
         ));
     }
 
+    /**
+     * Affiche la localisation actuelle du joueur.
+     */
     private void afficherLocalisation() {
             gui.afficher( zoneCourante.descriptionLongue());
             gui.afficher();
     }
 
+    /**
+     * Affiche un message de bienvenue au joueur.
+     */
     private void afficherMessageDeBienvenue() {
             gui.afficher("Bienvenue !");
             gui.afficher();
@@ -101,11 +122,18 @@ public class Jeu {
             }
     }
 
+    /**
+     * Affiche l'introduction du jeu.
+     */
     private void introduction() {
         gui.afficher("Salut Kael, nous devons vite assembler l'Oculus.\nTrouve les fragments avant les starsis !\n");
         gui.afficher("Souhaite tu que je te rappelle pourquoi notre mission est importante ? (Répondez par O/N ou Oui/Non)");
     }
 
+    /**
+     * Gère la suite de l'introduction en fonction de la réponse du joueur.
+     * @param s La réponse du joueur (O/N ou Oui/Non)
+     */
     private void introductionSuite(String s){
         gui.afficher( "> "+ s + "\n");
         switch (s.toUpperCase()){
@@ -132,13 +160,18 @@ public class Jeu {
                         "Après des décennies de reconstruction, la société humaine a retrouvé une certaine stabilité. De grandes cités ont émergé au milieu des ruines, et des alliances ont permis à des régions entières de renouer avec un semblant d’ordre. Cependant, les cicatrices de l’effondrement mondial sont encore visibles, et des factions s’affrontent pour le contrôle des ressources, des territoires et des vestiges du passé. \n" +
                         "Au cœur de cette reconstruction, un artefact ancien refait surface : L'Oculus du Jugement. Ce dispositif, dont l’origine exacte se perd dans les brumes du passé, est réputé pour avoir la capacité de contrôler un pouvoir ancien, oublié de tous. Bien que personne ne sache précisément ce que cet artefact active, une chose est certaine : son contrôle pourrait faire basculer l’équilibre fragile du monde.\n" +
                         "Cet artéfact d’une puissance inégalée a été volé et fragmenté en plusieurs morceaux dispersé dans différentes zones, gardés par des énigmes et des obstacles. Avec la menace d’une faction hostile qui souhaite se la procurer, le joueur incarne un jeune aventurier mandaté nommé Kael Soren pour récupérer les fragments et reconstituer l'artefact avant qu'il ne tombe entre de mauvaises mains.\n" +
-                        "L'objectif principal est de réunir les fragments de L’Oculus du Jugement tout en évitant des pièges, en résolvant des énigmes et en récoltant des indices et des objets . L'histoire se déroule dans plusieurs zones uniques qui offrent différents niveaux de difficulté dans le monde des Terres des Héritages Perdus.\n");
+                        "L'objectif principal est de réunir les fragments de L’Oculus du Jugement tout en évitant des pièges, en résolvant des énigmes et en récoltant des indices et des objets . L'histoire se déroule dans plusieurs zones uniques qui offrent différents niveaux de difficulté dans le monde des Terres des Héritages Perdus.\n\n\n" +
+                        "[EXIT] pour quitter l'introduction.");
                 break;
             }
             case "EXIT" -> allerEn("EXIT");
         }
     }
-    
+
+    /**
+     * Traite la commande lue par le joueur.
+     * @param commandeLue La commande saisie par le joueur
+     */
     public void traiterCommande(String commandeLue) {
     	gui.afficher( "> "+ commandeLue + "\n");
         if (zoneCourante.nomImage().equals("ville04.png")) {
@@ -153,12 +186,7 @@ public class Jeu {
             case "H", "HAUT" -> allerEn("HAUT");
             case "B", "BAS" -> allerEn("BAS");
             case "R", "REVENIR" -> revenir();
-            case "P", "PRENDRE" -> 
-                joueur.prendreItem(item);
-            case "D", "DEPOSER" -> 
-                joueur.deposerObjet(item);
             case "I", "AFFICHER L'INVENTAIRE ACTUEL" -> afficherInventaire();
-            case "T", "TEST" -> test();
 
             case "C", "COMMUNIQUER" -> {
                 PNJ pnj = zoneCourante.getPNJ();
@@ -207,6 +235,9 @@ public class Jeu {
         // Déplacements
             }
 
+    /**
+     * affiche l'aide du jeu.
+     */
     private void afficherAide() {
         gui.afficher("Etes-vous perdu ?");
         gui.afficher();
@@ -217,6 +248,10 @@ public class Jeu {
     }
 
 
+    /**
+     * Affiche un message de fin de jeu.
+     * Indique que le joueur a perdu et doit recommencer.
+     */
     public void gameOver() {
         zoneCourante = zones[6];
         gui.afficher("Vous êtes mort !\n");
@@ -225,6 +260,10 @@ public class Jeu {
         gui.enable(false);
     }
 
+    /**
+     * Gère le déplacement du joueur vers une nouvelle zone.
+     * @param direction La direction dans laquelle le joueur souhaite se déplacer
+     */
     private void allerEn(String direction) {
 
         Zone nouvelle = zoneCourante.obtientSortie(direction);
@@ -246,17 +285,26 @@ public class Jeu {
     }
 
 
-
+    /**
+     * Affiche un message de fin de jeu et désactive l'interface graphique.
+     */
     private void terminer() {
     	gui.afficher( "Au revoir...");
     	gui.enable( false);
     }
 
-    // Jeu.java
+    /**
+     * Retourne la zone actuelle du joueur.
+     * @return La zone actuelle
+     */
     public Zone getZoneDepart() {
         return zones[7];
     }
 
+    /**
+     * Retourne la zone actuelle du joueur.
+     * @return La zone actuelle
+     */
     private void revenir() {
         if (zonePrecedente == null) {
             gui.afficher("Vous n’avez aucun chemin à rebrousser.\n");
@@ -273,9 +321,6 @@ public class Jeu {
         gui.afficheImage(zoneCourante.nomImage());
     }
 
-    private void test() {
-        // TODO: Exécuter une action de test
-    }
 
     private void vendre() {
         final String ECLAT = "Éclat de cristal";
@@ -321,6 +366,10 @@ public class Jeu {
         gui.afficher();                         // saut de ligne seulement
     }
 
+    /**
+     * Connecte un joueur à une zone spécifique.
+     * @param compte
+     */
     public void connecterJoueur(Compte compte) {
 
         Zone pos = trouverZone(compte.getZoneCourante());
@@ -339,6 +388,11 @@ public class Jeu {
         joueur       = j;
     }
 
+    /**
+     * Trouve une zone par son nom.
+     * @param nomZone
+     * @return
+     */
     public Zone trouverZone(String nomZone) {
         if (nomZone == null) {
             return zones[0];
@@ -351,6 +405,10 @@ public class Jeu {
         return zones[0];
     }
 
+    /**
+     * Retourne la classe GUI.
+     * @return
+     */
     public GUI getGUI() {
         return gui;
     }

@@ -99,7 +99,10 @@ public class EnigmeInteractive implements Enigme {
 
 
 
-
+    /**
+     * Enigme du Juste Prix.
+     * @return
+     */
     private void JustePrix() {
         final int code = ThreadLocalRandom.current().nextInt(1000, 10000);
         Instant debut = Instant.now();
@@ -128,6 +131,10 @@ public class EnigmeInteractive implements Enigme {
         }
     }
 
+    /**
+     * Enigme du Mastermind.
+     * @return
+     */
     private void Mastermind() {
         if(jeu.getJoueur().getFragments().size() != 4){
             jeu.gameOver();
@@ -197,6 +204,10 @@ public class EnigmeInteractive implements Enigme {
         jeu.gameOver();
     }
 
+    /**
+     * Enigme des piliers.
+     * @return
+     */
     private void PilliersOrdre() {
         if (jeu == null || jeu.getJoueur() == null || jeu.getJoueur().getSac() == null) {
             JOptionPane.showMessageDialog(null, "Erreur : Le jeu ou le joueur n'est pas correctement initialisé.");

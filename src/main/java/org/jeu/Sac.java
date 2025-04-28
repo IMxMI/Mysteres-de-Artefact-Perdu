@@ -2,7 +2,10 @@ package org.jeu;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * Classe représentant un sac d'inventaire dans le jeu.
+ * Cette classe gère les objets que le joueur peut porter, avec une capacité maximale de 5 objets.
+ */
 public class Sac {
     private final List<Item> items;
     private static final int CAPACITE_MAX = 5;
@@ -12,6 +15,11 @@ public class Sac {
     }
 
 
+    /**
+     * Ajoute un item au sac.
+     * @param item
+     * @return
+     */
     public boolean ajouterItem(Item item) {
         if (items.size() >= CAPACITE_MAX) {
             System.out.println("Le sac est plein ! \n Vous ne pouvez pas porter plus de " + CAPACITE_MAX + " objets.");
@@ -22,6 +30,11 @@ public class Sac {
         }
     }
 
+    /**
+     * Enlève un item du sac.
+     * @param item
+     * @return
+     */
     public boolean enleverItem(Item item) {
         return items.remove(item);
     }
