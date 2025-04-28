@@ -35,8 +35,8 @@ public class Sac {
      * @param item
      * @return
      */
-    public boolean enleverItem(Item item) {
-        return items.remove(item);
+    public boolean enleverItem(String nomItem) {
+        return items.removeIf(item -> item.getNom().equals(nomItem));
     }
 
     public boolean contient(Item item) {

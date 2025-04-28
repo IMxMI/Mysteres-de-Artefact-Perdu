@@ -43,6 +43,7 @@ public class PNJ {
             } else if (joueur.getSac().possedeItem(quete.getCondition())) {
                 quete.terminer();
                 joueur.getFragments().add(Fragments.valueOf(quete.getRecompense()));
+                joueur.getSac().enleverItem(quete.getCondition());
                 return "Merci pour " + quete.getCondition() + "! Voici votre récompense : " + quete.getRecompense();
             } else {
                 return dialogue + " Apportez-moi " + quete.getCondition() + ".";

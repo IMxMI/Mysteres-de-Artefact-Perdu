@@ -24,7 +24,6 @@ public class Main {
      * @param args Les arguments de la ligne de commande (non utilisés)
      */
     public static void main(String[] args) {
-        Jeu jeu = new Jeu();
 
         Console console = System.console();
         String user, pass;
@@ -44,11 +43,11 @@ public class Main {
         }
 
         Compte compte = SauvegardeManager.login(user, pass);
+        Jeu jeu = new Jeu();
         if (compte == null) {
             System.out.println("=> nouveau compte créé");
             compte = SauvegardeManager.creerCompte(user, pass, jeu.getZoneDepart());
         }
-
         jeu.connecterJoueur(compte);
         GUI gui = new GUI(jeu);
         jeu.setGUI(gui);

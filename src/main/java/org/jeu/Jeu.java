@@ -61,6 +61,7 @@ public class Jeu {
         zones[4].ajouteSortie(Sortie.EST, zones[5]);
         zoneCourante = zones[7];
 
+
         Quete queteCristal = new Quete("Trouver le cristal", "Apportez un cristal au PNJ.", "cristal", "PREMIER");
         PNJ pnjNouvelleDaurea = new PNJ("Le Marchand", "Bonjour, aventurier, j'ai entendu parler que tu rechercher les fragments d'une relique du passé. \nJe pense pouvoir t'aider !", queteCristal);
         zones[0].ajouterPNJ(pnjNouvelleDaurea);
@@ -218,10 +219,6 @@ public class Jeu {
                     gui.afficher("Il n'y a personne à qui parler ici.");
                 }
             }
-
-
-
-            case "V", "VENDRE" -> vendre();
             case "X", "VOIR_INDICE" -> voirIndices();
 
             case "Z", "SAUVEGARDER" -> joueur.sauvegarderJeu();
@@ -321,32 +318,6 @@ public class Jeu {
         gui.afficheImage(zoneCourante.nomImage());
     }
 
-
-    private void vendre() {
-        final String ECLAT = "Éclat de cristal";
-        if (!zoneCourante.toString().equalsIgnoreCase("Nouvelle-Dauréa")) {
-            gui.afficher("Vous ne pouvez vendre qu’au comptoir de Nouvelle‑Dauréa.\n");
-            return;
-        }
-        if (!joueur.getSac().listeNoms().contains(ECLAT)) {
-            gui.afficher("Vous n’avez pas l’" + ECLAT + " à vendre.\n");
-            return;
-        }
-
-        /* on enlève l’objet et on crédite le fragment 1 ---------------- */
-        joueur.getSac().enleverItem(
-                joueur.getSac().getItems()
-                        .stream()
-                        .filter(i -> i.getNom().equals(ECLAT))
-                        .findFirst()
-                        .orElse(null)
-        );
-        if (!joueur.getFragments().contains(Fragments.PREMIER)) {
-            joueur.getFragments().add(Fragments.PREMIER);
-        }
-
-        gui.afficher("Vous vendez l’éclat : le premier fragment vous est remis !\n");
-    }
 
     private void voirIndices() {
         if (joueur.getIndices().isEmpty()) {

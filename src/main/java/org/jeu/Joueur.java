@@ -62,15 +62,6 @@ public class Joueur {
         sac.ajouterItem(item);
     }
 
-    public void deposerItem(Item item) {
-        sac.enleverItem(item);
-    }
-    
-    public void communiquerAvecPNJ() {
-        // TODO : implémenter la logique de communication selon le scénario
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
     public boolean possedeFragment(Fragments f) {
         return fragments.contains(f);
     }
